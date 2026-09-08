@@ -143,8 +143,7 @@
   color: rgba(183, 198, 187, .52);
   font: 500 8px/1.1 var(--font-geist-mono);
   letter-spacing: .28em;
-  transform: rotate(-8deg);
-  transform-origin: left top;
+  transform: none;
   text-shadow: 0 1px rgba(255, 255, 255, .04);
 }
 
@@ -152,6 +151,10 @@
   margin-left: 32px;
   color: rgba(116, 177, 135, .48);
   font-weight: 400;
+}
+
+.hero-side-copy {
+  top: 23%;
 }
 
 .prompthon-symbol b {
