@@ -1,0 +1,477 @@
+/* Premium green material system: light, surface, edge, depth and reflection. */
+:root {
+  --green-deep: #073a20;
+  --green-base: #12ad57;
+  --green-bright: #3bd67a;
+  --green-highlight: #a5eeb9;
+  --green-muted: #6eaa80;
+  --green-edge: rgba(75, 222, 130, .46);
+  --green-border: rgba(52, 190, 108, .25);
+  --green-glow: rgba(25, 184, 91, .12);
+  --green-glow-soft: rgba(25, 184, 91, .055);
+  --surface-deep: #030504;
+  --surface-raised: #080c09;
+  --edge-light: rgba(216, 235, 221, .09);
+  --green: var(--green-base);
+  --green-soft: var(--green-highlight);
+  --line: var(--green-border);
+}
+
+:focus-visible {
+  outline: 1px solid var(--green-bright);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(18, 173, 87, .08);
+}
+
+.site-shell {
+  background: radial-gradient(circle at 76% 38%, rgba(20, 100, 48, .065), transparent 27%), var(--black);
+}
+
+.auth-page {
+  background: radial-gradient(circle at 23% 55%, rgba(20, 100, 48, .055), transparent 28%), var(--black);
+}
+
+.final-cta {
+  background: radial-gradient(circle at 50% 50%, rgba(22, 105, 49, .06), transparent 34%), var(--black);
+}
+
+/* Subtle technical atmosphere: mostly graphite, with a few lit intersections. */
+.site-shell::before,
+.auth-page::before,
+.portal-shell::before {
+  opacity: .48;
+  background-image:
+    radial-gradient(circle at 16% 22%, rgba(91, 222, 139, .16) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 74% 41%, rgba(91, 222, 139, .11) 0 1px, transparent 1.5px),
+    linear-gradient(rgba(113, 129, 117, .022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(113, 129, 117, .022) 1px, transparent 1px);
+  background-size: 260px 210px, 340px 270px, 48px 48px, 48px 48px;
+}
+
+.hero-coordinate-grid {
+  opacity: .42;
+  background-image:
+    radial-gradient(circle at 31% 24%, rgba(89, 229, 141, .3) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 73% 58%, rgba(89, 229, 141, .2) 0 1px, transparent 1.6px),
+    linear-gradient(rgba(83, 111, 91, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(83, 111, 91, .045) 1px, transparent 1px);
+  background-size: 310px 240px, 390px 310px, 52px 52px, 52px 52px;
+}
+
+.reference-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 79% 72%, rgba(41, 194, 103, .075), transparent 18%),
+    radial-gradient(ellipse at 68% 84%, rgba(84, 213, 132, .035), transparent 22%);
+  mix-blend-mode: screen;
+}
+
+/* Keep the hero's measuring geometry away from the event metadata. */
+.hero-measure-left i {
+  display: none;
+}
+
+.reference-meta {
+  position: relative;
+  align-items: stretch;
+  border-top-color: rgba(223, 234, 225, .1);
+  border-bottom-color: rgba(223, 234, 225, .08);
+}
+
+.reference-meta::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 28%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(65, 211, 121, .34), transparent);
+}
+
+.reference-meta > div {
+  min-height: 37px;
+  align-items: center;
+}
+
+.reference-meta p {
+  align-content: center;
+}
+
+.reference-meta strong,
+.reference-meta span {
+  line-height: 1.15;
+}
+
+.reference-meta svg,
+.details-grid svg,
+.code-note svg,
+.contact-list svg,
+.principles svg {
+  color: var(--green-bright);
+  filter: drop-shadow(0 0 5px rgba(37, 194, 100, .14));
+}
+
+.hero-wall-note {
+  position: absolute;
+  z-index: 4;
+  top: 18.5%;
+  left: 65%;
+  display: grid;
+  gap: 8px;
+  color: rgba(183, 198, 187, .52);
+  font: 500 8px/1.1 var(--font-geist-mono);
+  letter-spacing: .28em;
+  transform: rotate(-8deg);
+  text-shadow: 0 1px rgba(255, 255, 255, .04);
+}
+
+.hero-wall-note b {
+  margin-left: 32px;
+  color: rgba(116, 177, 135, .48);
+  font-weight: 400;
+}
+
+.prompthon-symbol b {
+  background: linear-gradient(145deg, var(--green-highlight) 0%, var(--green-bright) 28%, var(--green-deep) 100%);
+  filter: drop-shadow(0 0 5px rgba(38, 188, 96, .13));
+}
+
+.auth-copy h1 span,
+.final-cta h2 span {
+  color: transparent;
+  background: linear-gradient(180deg, var(--green-highlight), var(--green-base) 52%, #0b7139);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 0 22px rgba(28, 160, 79, .055);
+}
+
+.engine-bar em,
+.engine-output b,
+.pagination button.active,
+.round-timer strong,
+.qualification-flow .accent {
+  color: var(--green-highlight);
+  text-shadow: 0 0 9px rgba(40, 183, 94, .08);
+}
+
+.engine-node,
+.receipt-check,
+.progress-item.done > span,
+.progress-item.active > span {
+  border-color: rgba(74, 205, 122, .3);
+  color: var(--green-highlight);
+  background: radial-gradient(circle at 50% 15%, rgba(100, 219, 143, .075), transparent 55%);
+  box-shadow: inset 0 1px rgba(217, 255, 229, .045), 0 0 18px rgba(29, 157, 79, .045);
+}
+
+/* Green becomes a lit material instead of a flat paint color. */
+.copy-rule,
+.presenter p i,
+.hero-side-copy i,
+.hero-platform-note i,
+.challenge-teaser > p i,
+.round-rule,
+.live-progress,
+.progress span {
+  background: linear-gradient(90deg, var(--green-deep), var(--green-bright) 58%, rgba(59, 214, 122, .08));
+  box-shadow: 0 0 7px rgba(27, 183, 91, .1);
+}
+
+.desktop-nav a::after,
+.portal-content > .page-intro::before {
+  background: linear-gradient(90deg, var(--green-deep), var(--green-bright), rgba(59, 214, 122, .12));
+  box-shadow: 0 0 8px rgba(33, 194, 99, .12);
+}
+
+.eyebrow span,
+.reference-explore,
+.section-row a,
+.queue-row > a,
+.data-table td > a,
+.event-live,
+.success-copy,
+.live-pill strong {
+  color: var(--green-muted);
+}
+
+.desktop-nav a.active,
+.reference-meta svg,
+.nav-login svg,
+.reference-login svg,
+.status-live,
+.status-active,
+.status-approved,
+.status-ready,
+.status-valid,
+.status-import-complete {
+  color: var(--green-highlight);
+}
+
+/* Physical-control treatment for login and outlined actions. */
+.nav-login,
+.reference-login,
+.button.secondary,
+.challenge-teaser button:last-child {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(145deg, rgba(4, 8, 5, .96), rgba(7, 15, 9, .92)) padding-box,
+    linear-gradient(135deg, rgba(36, 128, 71, .35), rgba(92, 230, 145, .68) 48%, rgba(21, 88, 48, .28)) border-box;
+  box-shadow:
+    inset 0 1px rgba(194, 255, 213, .045),
+    inset 0 -8px 20px rgba(0, 0, 0, .2),
+    0 0 0 1px rgba(0, 0, 0, .4),
+    0 5px 22px rgba(0, 0, 0, .24);
+}
+
+.nav-login:hover,
+.reference-login:hover,
+.button.secondary:hover:not(:disabled),
+.challenge-teaser button:last-child:hover {
+  border-color: transparent;
+  background:
+    linear-gradient(145deg, rgba(5, 11, 7, .98), rgba(9, 23, 13, .94)) padding-box,
+    linear-gradient(135deg, rgba(48, 158, 86, .48), rgba(126, 239, 164, .82) 50%, rgba(28, 118, 60, .4)) border-box;
+  box-shadow:
+    inset 0 1px rgba(211, 255, 224, .075),
+    inset 0 -10px 24px rgba(4, 48, 23, .1),
+    0 0 18px rgba(31, 190, 96, .09),
+    0 8px 26px rgba(0, 0, 0, .3);
+  transform: translateY(-1px);
+}
+
+.reference-login svg,
+.nav-login svg {
+  filter: drop-shadow(0 0 5px rgba(60, 220, 122, .22));
+}
+
+.reference-login:hover svg,
+.nav-login:hover svg {
+  color: #b8f4c8;
+  transform: translateX(4px);
+}
+
+.button.primary,
+.primary-button {
+  border: 1px solid rgba(125, 236, 162, .34);
+  color: #f1f8f3;
+  background: linear-gradient(145deg, #0f8d47 0%, #16b45b 47%, #0b7a3c 100%);
+  box-shadow:
+    inset 0 1px rgba(218, 255, 229, .27),
+    inset 0 -9px 18px rgba(2, 42, 19, .22),
+    0 7px 22px rgba(4, 72, 31, .18);
+  text-shadow: 0 1px rgba(0, 0, 0, .25);
+}
+
+.button.primary:hover:not(:disabled),
+.primary-button:hover {
+  background: linear-gradient(145deg, #11994d, #1cbd63 50%, #0c8541);
+  box-shadow:
+    inset 0 1px rgba(229, 255, 236, .34),
+    inset 0 -10px 20px rgba(2, 42, 19, .22),
+    0 0 20px rgba(31, 190, 96, .1),
+    0 10px 28px rgba(0, 0, 0, .28);
+}
+
+/* Panels use a graphite surface, a top reflection and localized green edge. */
+.auth-panel,
+.current-state,
+.challenge-brief,
+.generated-output,
+.reference-image,
+.participant-submissions > article,
+.submission-receipt,
+.round-control-grid article,
+.submission-admin-list article,
+.submission-review,
+.decision-panel,
+.data-table-wrap,
+.rounds-admin-list > article,
+.modal,
+.prize {
+  background:
+    linear-gradient(118deg, rgba(53, 82, 61, .035), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, .018), transparent 20%),
+    var(--surface-deep);
+  box-shadow:
+    inset 0 1px var(--edge-light),
+    0 16px 44px rgba(0, 0, 0, .18);
+}
+
+.round-control-grid article,
+.submission-admin-list article,
+.participant-submissions > article,
+.prize {
+  transition: border-color .28s ease, background .28s ease, box-shadow .28s ease, transform .28s ease;
+}
+
+.round-control-grid article:hover,
+.submission-admin-list article:hover,
+.participant-submissions > article:hover,
+.prize:hover {
+  border-color: rgba(67, 192, 113, .22);
+  background:
+    linear-gradient(118deg, rgba(45, 157, 88, .055), transparent 27%),
+    linear-gradient(180deg, rgba(255, 255, 255, .025), transparent 22%),
+    #040705;
+  box-shadow: inset 0 1px rgba(196, 236, 208, .07), 0 18px 48px rgba(0, 0, 0, .24), 0 0 18px var(--green-glow-soft);
+  transform: translateY(-2px);
+}
+
+.round-control-grid article.active,
+.rounds-admin-list > article.active,
+.prize-01,
+.current-state {
+  border-color: var(--green-border);
+  background:
+    linear-gradient(135deg, rgba(35, 156, 83, .07), transparent 38%),
+    linear-gradient(180deg, rgba(198, 255, 216, .022), transparent 24%),
+    #040705;
+  box-shadow: inset 0 1px rgba(199, 241, 212, .07), 0 0 24px rgba(24, 151, 75, .04);
+}
+
+.round-editorial:hover .round-num {
+  color: transparent;
+  background: linear-gradient(180deg, rgba(162, 235, 185, .62), rgba(29, 113, 60, .68));
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 0 20px rgba(32, 153, 78, .05);
+}
+
+/* Active and live states reserve the brightest light for tiny focal points. */
+.status-badge {
+  padding: 5px 8px;
+  border: 1px solid rgba(228, 239, 231, .065);
+  background: rgba(9, 13, 10, .72);
+}
+
+.status-live,
+.status-active,
+.status-approved,
+.status-ready,
+.status-valid,
+.status-import-complete {
+  border-color: rgba(63, 188, 108, .2);
+  background: linear-gradient(135deg, rgba(19, 102, 50, .16), rgba(7, 15, 9, .7));
+  box-shadow: inset 0 1px rgba(189, 245, 206, .035);
+}
+
+.status-badge i,
+.auth-system i,
+.live-pill i,
+.event-live i,
+.event-control-status i,
+.round-status-line i,
+.live-dot,
+.progress-item > span i,
+.orbit::after {
+  background: radial-gradient(circle at 38% 32%, #c6f8d3 0 12%, var(--green-bright) 22%, #0c843e 72%);
+  box-shadow: 0 0 0 3px rgba(42, 182, 94, .09), 0 0 8px rgba(48, 209, 111, .2);
+}
+
+.portal-sidebar nav a.active {
+  color: #e8f1ea;
+  border-left-color: var(--green-bright);
+  background: linear-gradient(90deg, rgba(21, 132, 62, .13), rgba(21, 132, 62, .025) 70%, transparent);
+  box-shadow: inset 1px 0 rgba(162, 239, 185, .16);
+}
+
+/* Form fields and upload surfaces respond with a thin, localized highlight. */
+.auth-panel input,
+.field-label select,
+.field-label textarea,
+.decision-panel textarea,
+.modal-feedback textarea,
+.filter-bar select,
+.search-field input,
+.state-lab select {
+  border-color: rgba(220, 233, 224, .095);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .012), transparent), #030504;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .018);
+}
+
+.auth-panel input:hover,
+.field-label select:hover,
+.field-label textarea:hover,
+.decision-panel textarea:hover,
+.modal-feedback textarea:hover,
+.filter-bar select:hover,
+.search-field input:hover,
+.state-lab select:hover {
+  border-color: rgba(169, 191, 175, .2);
+}
+
+.auth-panel input:focus,
+.field-label select:focus,
+.field-label textarea:focus,
+.decision-panel textarea:focus,
+.modal-feedback textarea:focus,
+.filter-bar select:focus,
+.search-field input:focus,
+.state-lab select:focus {
+  border-color: rgba(75, 215, 128, .42);
+  box-shadow: inset 0 1px rgba(208, 255, 222, .025), 0 0 0 2px rgba(25, 174, 84, .045), 0 0 15px rgba(25, 174, 84, .045);
+}
+
+.file-drop {
+  border-color: rgba(77, 179, 114, .2);
+  background:
+    linear-gradient(135deg, rgba(24, 121, 57, .035), transparent 38%),
+    #030504;
+  box-shadow: inset 0 1px rgba(208, 255, 222, .02);
+}
+
+.file-drop:hover,
+.file-drop.has-file {
+  border-color: rgba(80, 213, 130, .42);
+  background: linear-gradient(135deg, rgba(26, 146, 67, .075), transparent 45%), #040705;
+  box-shadow: inset 0 1px rgba(218, 255, 229, .04), 0 0 18px rgba(24, 162, 78, .055);
+}
+
+.file-drop svg {
+  color: var(--green-muted);
+  filter: drop-shadow(0 0 5px rgba(32, 184, 91, .12));
+}
+
+.file-drop:hover svg,
+.file-drop.has-file svg {
+  color: var(--green-highlight);
+}
+
+@media (max-width: 1200px) {
+  .hero-wall-note {
+    left: 64%;
+    font-size: 7px;
+    letter-spacing: .2em;
+  }
+}
+
+@media (max-width: 1100px) {
+  .hero-wall-note {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .reference-meta > div {
+    min-height: 34px;
+  }
+
+  .status-badge {
+    padding: 4px 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-login:hover,
+  .reference-login:hover,
+  .round-control-grid article:hover,
+  .submission-admin-list article:hover,
+  .participant-submissions > article:hover,
+  .prize:hover {
+    transform: none;
+  }
+}
