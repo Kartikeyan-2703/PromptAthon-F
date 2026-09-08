@@ -137,13 +137,14 @@
   position: absolute;
   z-index: 4;
   top: 18.5%;
-  left: 65%;
+  left: 69.5%;
   display: grid;
   gap: 8px;
   color: rgba(183, 198, 187, .52);
   font: 500 8px/1.1 var(--font-geist-mono);
   letter-spacing: .28em;
   transform: rotate(-8deg);
+  transform-origin: left top;
   text-shadow: 0 1px rgba(255, 255, 255, .04);
 }
 
@@ -461,7 +462,7 @@
 
 @media (max-width: 1200px) {
   .hero-wall-note {
-    left: 64%;
+    left: 70.5%;
     font-size: 7px;
     letter-spacing: .2em;
   }
