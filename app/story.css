@@ -69,7 +69,9 @@
 .intro-section {
   min-height: 0;
   padding-top: 58px;
-  padding-bottom: 98px;
+  padding-bottom: 126px;
+  column-gap: 5.5vw;
+  row-gap: 38px;
   align-items: start;
   background:
     radial-gradient(circle at 61% 47%, rgba(26, 111, 55, .045), transparent 22%),
@@ -139,20 +141,31 @@
   z-index: 2;
 }
 
+.intro-standard {
+  margin: 24px 0 0;
+  color: #606a62;
+  font: 7px var(--font-geist-mono);
+  letter-spacing: .38em;
+}
+
 .about-blueprint {
-  width: min(610px, 100%);
-  margin-top: 34px;
-  padding: 18px;
+  width: 100%;
+  grid-column: 2 / 4;
+  margin-top: 2px;
+  padding: 18px 22px 22px;
   position: relative;
+  z-index: 2;
   overflow: hidden;
-  border: 1px solid rgba(206, 224, 211, .075);
+  border: 1px solid rgba(95, 189, 126, .17);
+  border-radius: 10px;
   background:
-    linear-gradient(130deg, rgba(28, 105, 53, .055), transparent 54%),
+    linear-gradient(130deg, rgba(28, 105, 53, .065), transparent 48%),
+    radial-gradient(circle at 16% 5%, rgba(99, 214, 139, .055), transparent 20%),
     linear-gradient(rgba(157, 174, 161, .018) 1px, transparent 1px),
     linear-gradient(90deg, rgba(157, 174, 161, .018) 1px, transparent 1px),
     rgba(3, 6, 4, .82);
-  background-size: auto, 22px 22px, 22px 22px, auto;
-  box-shadow: inset 0 1px rgba(227, 244, 232, .035), 0 22px 60px rgba(0, 0, 0, .2);
+  background-size: auto, auto, 22px 22px, 22px 22px, auto;
+  box-shadow: inset 0 1px rgba(204, 245, 216, .08), 0 24px 80px rgba(0, 0, 0, .32), 0 0 30px rgba(26, 144, 70, .025);
 }
 
 .about-blueprint::after {
@@ -169,8 +182,9 @@
 }
 
 .about-blueprint > header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 36px;
   align-items: center;
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(222, 236, 226, .06);
@@ -179,115 +193,199 @@
   letter-spacing: .14em;
 }
 
+.about-blueprint > header em {
+  color: var(--green-muted);
+  font-style: normal;
+}
+
 .about-blueprint > header b {
   color: #3d4a40;
   font-weight: 500;
 }
 
+.about-blueprint > header small {
+  padding-left: 22px;
+  border-left: 1px solid rgba(222, 236, 226, .055);
+  color: #536057;
+  font: 6px/1.5 var(--font-geist-mono);
+  letter-spacing: .12em;
+}
+
 .blueprint-schematic {
   display: grid;
-  grid-template-columns: minmax(120px, .8fr) minmax(150px, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(12px, 1.8vw, 28px);
+  padding: 28px 12px 0;
   position: relative;
   z-index: 1;
 }
 
-.blueprint-steps {
-  padding-top: 8px;
-}
-
-.blueprint-steps > div {
-  display: grid;
-  grid-template-columns: 28px 1fr;
-  align-items: center;
-  min-height: 34px;
-  position: relative;
-  color: #8e9990;
-  font: 8px var(--font-geist-mono);
-  letter-spacing: .12em;
-}
-
-.blueprint-steps span {
-  color: #465048;
-}
-
-.blueprint-steps strong {
-  font-weight: 500;
-}
-
-.blueprint-steps i {
+.blueprint-signal {
   position: absolute;
-  left: 12px;
-  top: 25px;
-  width: 1px;
-  height: 19px;
-  background: linear-gradient(var(--green-border), transparent);
+  z-index: -1;
+  left: 8%;
+  right: 8%;
+  top: 48%;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(65, 175, 104, .12);
+  box-shadow: 0 -7px rgba(65, 175, 104, .025), 0 7px rgba(65, 175, 104, .025);
 }
 
-.blueprint-object {
-  min-height: 184px;
-  padding: 17px 0 8px 20px;
+.blueprint-signal::after {
+  content: "";
+  display: block;
+  width: 22%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--green-highlight), transparent);
+  box-shadow: 0 0 8px rgba(61, 215, 121, .18);
+  animation: pipeline-signal 4.8s cubic-bezier(.45,0,.2,1) infinite;
+}
+
+.blueprint-stage {
+  min-height: 154px;
+  padding: 14px 12px 12px;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  border-left: 1px solid rgba(222, 236, 226, .055);
-  color: #536057;
+  justify-content: flex-start;
+  border: 1px solid rgba(88, 178, 119, .1);
+  background: linear-gradient(180deg, rgba(4, 12, 7, .9), rgba(2, 5, 3, .95));
+  color: #8e9990;
+  box-shadow: inset 0 1px rgba(212, 244, 222, .025);
+  transition: border-color .35s ease, transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease;
+}
+
+.blueprint-stage:hover {
+  transform: translateY(-3px);
+  border-color: rgba(100, 215, 140, .25);
+  box-shadow: inset 0 1px rgba(222, 255, 232, .05), 0 9px 26px rgba(0, 0, 0, .22), 0 0 18px rgba(35, 173, 86, .04);
+}
+
+.blueprint-stage > span {
+  align-self: flex-start;
+  color: #465048;
   font: 7px var(--font-geist-mono);
   letter-spacing: .12em;
 }
 
-.logic-ring {
-  width: 88px;
-  height: 88px;
+.blueprint-stage strong {
+  margin-top: 13px;
+  color: #dbe2dc;
+  font: 500 8px var(--font-geist-mono);
+  letter-spacing: .1em;
+}
+
+.blueprint-stage small {
+  max-width: 115px;
+  margin-top: 9px;
+  color: #6a746c;
+  font: 6px/1.35 var(--font-geist-mono);
+  text-align: center;
+  letter-spacing: .025em;
+}
+
+.blueprint-stage > i {
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  top: calc(48% - 2px);
+  right: clamp(-17px, -1.2vw, -9px);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--green-highlight), var(--green-base) 42%, var(--green-deep));
+  box-shadow: 0 0 9px rgba(58, 210, 117, .2);
+}
+
+.blueprint-stage:last-child > i {
+  display: none;
+}
+
+.pipeline-glyph {
+  width: 32px;
+  height: 32px;
+  margin-top: 13px;
   position: relative;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(67, 179, 106, .13);
-  border-radius: 50%;
-  box-shadow: inset 0 0 28px rgba(32, 151, 79, .035), 0 0 0 12px rgba(98, 125, 106, .018);
+  color: var(--green-highlight);
+  border: 1px solid rgba(75, 204, 121, .16);
+  background: rgba(16, 75, 37, .035);
+  box-shadow: inset 0 0 12px rgba(50, 183, 96, .025);
+  font: 500 11px var(--font-geist-mono);
 }
 
-.logic-ring::before,
-.logic-ring::after {
-  content: "";
+.pipeline-glyph::before {
+  display: block;
+  color: var(--green-highlight);
+  opacity: .8;
+  text-shadow: 0 0 8px rgba(60, 213, 119, .12);
+}
+
+.glyph-1::before { content: "[≡]"; }
+.glyph-2::before { content: "◇◇"; letter-spacing: -5px; transform: rotate(45deg); }
+.glyph-3::before { content: "≡"; text-decoration: line-through; }
+.glyph-4::before { content: ">_"; }
+.glyph-5::before { content: "◇"; font-size: 18px; }
+
+.intro-annotation {
   position: absolute;
-  background: rgba(80, 153, 103, .1);
+  z-index: 2;
+  display: grid;
+  gap: 6px;
+  color: #586159;
+  font: 6px/1.25 var(--font-geist-mono);
+  letter-spacing: .12em;
 }
 
-.logic-ring::before {
-  width: 118px;
+.intro-annotation i {
+  width: 17px;
   height: 1px;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, var(--green-bright), transparent);
+  box-shadow: 0 0 7px rgba(49, 197, 105, .1);
 }
 
-.logic-ring::after {
-  width: 1px;
-  height: 118px;
+.intro-annotation b {
+  color: #3f4d43;
+  font-weight: 500;
 }
 
-.logic-ring i {
-  width: 52px;
-  height: 52px;
+.intro-annotation-left {
+  left: 0;
+  bottom: 250px;
+}
+
+.intro-annotation-right {
+  right: -8px;
+  top: 30%;
+}
+
+.intro-floor {
+  height: 190px;
   position: absolute;
-  border: 1px dashed rgba(84, 184, 116, .18);
-  border-radius: 50%;
-}
-
-.logic-ring b {
-  color: var(--green-muted);
-  font: 500 16px var(--font-geist-mono);
-  text-shadow: 0 0 12px rgba(47, 190, 101, .08);
-}
-
-.blueprint-object small {
-  color: #425047;
-  font: 6px var(--font-geist-mono);
-  letter-spacing: .1em;
+  z-index: 0;
+  left: -12vw;
+  right: -12vw;
+  bottom: -64px;
+  opacity: .52;
+  clip-path: polygon(0 48%, 17% 12%, 50% 42%, 82% 11%, 100% 46%, 100% 100%, 0 100%);
+  background:
+    linear-gradient(164deg, transparent 0 34%, rgba(66, 180, 105, .08) 34.2%, transparent 34.5%),
+    linear-gradient(196deg, transparent 0 34%, rgba(66, 180, 105, .065) 34.2%, transparent 34.5%),
+    repeating-linear-gradient(90deg, rgba(185, 201, 189, .018) 0 1px, transparent 1px 64px),
+    linear-gradient(180deg, #080b09, #010201 68%);
+  box-shadow: inset 0 1px rgba(72, 188, 113, .07);
 }
 
 .code-note {
   position: relative;
   overflow: hidden;
+  background:
+    linear-gradient(var(--green-muted), var(--green-muted)) left top / 10px 1px no-repeat,
+    linear-gradient(var(--green-muted), var(--green-muted)) left top / 1px 10px no-repeat,
+    linear-gradient(var(--green-muted), var(--green-muted)) right bottom / 10px 1px no-repeat,
+    linear-gradient(var(--green-muted), var(--green-muted)) right bottom / 1px 10px no-repeat;
 }
 
 .code-note::after {
@@ -317,7 +415,7 @@
 .round-editorial {
   min-height: 570px;
   align-items: start;
-  transition: background .4s ease;
+  transition: background .4s ease, box-shadow .4s ease;
 }
 
 .round-editorial::after {
@@ -331,6 +429,21 @@
 }
 
 .round-editorial:hover::after {
+  opacity: 1;
+}
+
+.round-editorial:hover {
+  box-shadow: inset 0 1px rgba(92, 207, 132, .04), inset 0 -1px rgba(92, 207, 132, .035);
+}
+
+.round-editorial .skill-list,
+.round-editorial .round-copy > small {
+  opacity: .72;
+  transition: opacity .35s ease, color .35s ease;
+}
+
+.round-editorial:hover .skill-list,
+.round-editorial:hover .round-copy > small {
   opacity: 1;
 }
 
@@ -475,6 +588,16 @@
   text-align: right;
 }
 
+.details-head h2,
+.prize-head h2 {
+  margin: 17px 0 0;
+  max-width: 760px;
+  font-size: clamp(42px, 5vw, 72px);
+  font-weight: 570;
+  line-height: .94;
+  letter-spacing: -.055em;
+}
+
 .details-grid {
   border-top: 1px solid rgba(224, 236, 227, .08);
   border-bottom: 1px solid rgba(224, 236, 227, .065);
@@ -497,6 +620,11 @@
 
 .details-grid > div:hover i {
   transform: scaleX(1);
+}
+
+.details-grid > div:nth-child(1) strong,
+.details-grid > div:nth-child(2) strong {
+  font-size: clamp(24px, 2.4vw, 36px);
 }
 
 .prize-section {
@@ -761,14 +889,30 @@
   75%, 100% { left: 100%; opacity: 0; }
 }
 
+@keyframes pipeline-signal {
+  0% { transform: translateX(-120%); opacity: 0; }
+  15% { opacity: 1; }
+  72% { opacity: .85; }
+  100% { transform: translateX(555%); opacity: 0; }
+}
+
 @media (max-width: 1100px) {
   .blueprint-schematic {
-    grid-template-columns: minmax(110px, .9fr) minmax(120px, 1fr);
-    gap: 14px;
+    gap: 8px;
+    padding-inline: 0;
   }
 
-  .blueprint-object {
-    padding-left: 14px;
+  .blueprint-stage {
+    min-height: 145px;
+    padding-inline: 8px;
+  }
+
+  .blueprint-stage > i {
+    right: -7px;
+  }
+
+  .intro-annotation {
+    display: none;
   }
 
   .round-editorial {
@@ -801,8 +945,9 @@
   }
 
   .about-blueprint {
-    width: min(560px, 100%);
-    margin-top: 30px;
+    width: 100%;
+    grid-column: 1;
+    margin-top: 8px;
   }
 
   .round-editorial {
@@ -857,14 +1002,72 @@
 
   .about-blueprint {
     padding: 15px;
+    border-radius: 7px;
   }
 
   .blueprint-schematic {
     grid-template-columns: 1fr;
+    gap: 8px;
+    padding-top: 18px;
   }
 
-  .blueprint-object {
+  .about-blueprint > header {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+  }
+
+  .about-blueprint > header small {
     display: none;
+  }
+
+  .blueprint-stage {
+    min-height: 86px;
+    display: grid;
+    grid-template-columns: 32px 42px minmax(80px, .65fr) 1fr;
+    column-gap: 10px;
+    align-items: center;
+    justify-items: start;
+  }
+
+  .blueprint-stage > span,
+  .blueprint-stage strong,
+  .blueprint-stage small,
+  .pipeline-glyph {
+    margin: 0;
+  }
+
+  .blueprint-stage small {
+    max-width: none;
+    text-align: left;
+  }
+
+  .blueprint-stage > i {
+    width: 4px;
+    height: 4px;
+    top: auto;
+    right: auto;
+    left: 25px;
+    bottom: -7px;
+  }
+
+  .blueprint-signal {
+    left: 40px;
+    right: auto;
+    top: 10%;
+    bottom: 10%;
+    width: 1px;
+    height: auto;
+  }
+
+  .blueprint-signal::after {
+    width: 100%;
+    height: 22%;
+    background: linear-gradient(transparent, var(--green-highlight), transparent);
+    animation: pipeline-signal-mobile 4.8s cubic-bezier(.45,0,.2,1) infinite;
+  }
+
+  .intro-floor {
+    height: 120px;
   }
 
   .round-signal {
@@ -928,7 +1131,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .code-note::after {
+  .code-note::after,
+  .blueprint-signal::after {
     animation: none;
   }
 
@@ -942,4 +1146,11 @@
   .prize::after {
     transition: none;
   }
+}
+
+@keyframes pipeline-signal-mobile {
+  0% { transform: translateY(-120%); opacity: 0; }
+  15% { opacity: 1; }
+  72% { opacity: .85; }
+  100% { transform: translateY(555%); opacity: 0; }
 }
