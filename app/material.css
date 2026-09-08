@@ -115,6 +115,14 @@
   filter: drop-shadow(0 0 5px rgba(37, 194, 100, .14));
 }
 
+@media (min-width: 601px) {
+  .reference-hero-copy .scroll-cue {
+    min-height: 54px;
+    padding-top: 30px;
+    flex-shrink: 0;
+  }
+}
+
 .hero-wall-note {
   position: absolute;
   z-index: 4;
