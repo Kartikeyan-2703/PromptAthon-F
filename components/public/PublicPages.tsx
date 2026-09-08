@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowDown, ArrowRight, Braces, Check, CornerDownRight, ScanLine, Trophy } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowDown, ArrowLeft, ArrowRight, Braces, CalendarDays, Check, Clock3, CornerDownRight, IndianRupee, Mouse, ScanLine, Trophy, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { rounds, rules } from '@/lib/mock-data';
 import { PublicLayout } from '@/components/layout/PublicLayout';
@@ -9,25 +10,39 @@ import { PageIntro } from '@/components/ui';
 
 const reveal = { initial:{opacity:0,y:24}, whileInView:{opacity:1,y:0}, viewport:{once:true,amount:.18}, transition:{duration:.65,ease:[.16,1,.3,1] as const} };
 
-function EngineVisual() { return <div className="engine-wrap" aria-label="Prompt engine visualization">
-  <div className="engine-index">PROMPT_ENGINE / 01</div><div className="engine-window"><div className="engine-bar"><span/><span/><b>PRECISION SYSTEM</b><em>LIVE</em></div><div className="engine-grid"><div className="engine-code"><p><i>01</i><span className="dim">role</span>: prompt_engineer</p><p><i>02</i><span className="dim">objective</span>: solve</p><p><i>03</i><span className="dim">constraints</span>: complete</p><p><i>04</i><span className="dim">precision</span>: <b>98.4%</b></p></div><div className="engine-node" aria-hidden="true"><span>P</span><div className="orbit orbit-one"/><div className="orbit orbit-two"/></div></div><div className="analysis-row"><span>ANALYZING INPUT</span><strong>87%</strong></div><div className="progress"><span/></div><div className="engine-output"><span>OUTPUT</span><p>Instruction set resolved. Missing context identified.</p><b>VALIDATED ✓</b></div></div><div className="axis"><span>CONTEXT</span><span>CONSTRAINT</span><span>OUTPUT</span></div>
-  </div>;
-}
-
 function RoundEditorial({ round, compact = false }: { round: typeof rounds[number]; compact?: boolean }) { return <motion.article className={`round-editorial ${compact?'compact':''}`} {...reveal}>
   <div className="round-num">{round.code}</div><div className="round-rule"/><div className="round-copy"><p className="eyebrow">ROUND {round.code} / CORE CHALLENGE</p><h3>{round.title}</h3><blockquote>“{round.prompt}”</blockquote><p>{round.description}</p><div className="skill-list">{round.skills.map(skill=><span key={skill}>{skill}</span>)}</div><small>EVALUATION / {round.evaluation}</small></div>
   </motion.article>;
 }
 
 export function HomePage() { return <PublicLayout><main>
-  <section className="hero" aria-labelledby="hero-title"><motion.div className="hero-copy" initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:.8,ease:[.16,1,.3,1]}}><p className="eyebrow"><span>&gt;</span> PROMPTHON 2026 / SYSTEM INITIALIZED</p><h1 id="hero-title"><span>PROMPTHON</span><strong>AI PROMPT<br/>ENGINEERING<br/>HACKATHON</strong></h1><p className="hero-intro">Turn vague problems into precise instructions.<br/>Reverse-engineer intelligence. Recreate the impossible.</p><div className="hero-meta"><p><span>DATE / TIME</span>12 SEP 2026 · 09:00—16:00</p><p><span>TEAM / ENTRY</span>1—3 MEMBERS · ₹100</p></div><div className="hero-actions"><Link className="primary-button" href="/login">Participant login <ArrowRight size={17}/></Link><a className="text-link" href="#challenge">Explore the challenge <ArrowDown size={15}/></a></div></motion.div><motion.div initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{delay:.15,duration:.9,ease:[.16,1,.3,1]}}><EngineVisual/></motion.div></section>
-  <div className="hero-rail" aria-hidden="true"><span>12 / 09 / 26</span><i/><span>CSBS · EEC</span></div>
+  <section className="reference-hero" aria-labelledby="hero-title">
+    <Image className="reference-hero-image" src="/prompthon-hero-v2.png" alt="A dark brutalist hall opening to daylight with a laptop displaying a restrained green technical interface" fill priority sizes="100vw"/>
+    <div className="reference-hero-shade"/><div className="hero-coordinate-grid" aria-hidden="true"/><div className="hero-measure hero-measure-left" aria-hidden="true"><span/><i/></div>
+    <motion.div className="reference-hero-copy" initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{duration:.9,ease:[.16,1,.3,1]}}>
+      <div className="presenter"><span>EASWARI ENGINEERING COLLEGE</span><span>DEPARTMENT OF COMPUTER SCIENCE AND BUSINESS SYSTEMS</span><p><i/>PRESENTS</p></div>
+      <h1 id="hero-title"><strong>PROMPTHON</strong><span>2026</span></h1>
+      <p className="hero-subtitle">AI PROMPT ENGINEERING HACKATHON</p><i className="copy-rule"/>
+      <p className="hero-intro">Turn vague problems into precise instructions.<br/>Reverse-engineer intelligence.<br/>Recreate the impossible.</p>
+      <div className="reference-meta" aria-label="Event information">
+        <div><CalendarDays/><p><strong>12 SEP 2026</strong><span>SATURDAY</span></p></div>
+        <div><Clock3/><p><strong>9:00 AM — 4:00 PM</strong><span>5 HOURS</span></p></div>
+        <div><Users/><p><strong>TEAM SIZE</strong><span>1 — 3 MEMBERS</span></p></div>
+        <div><IndianRupee/><p><strong>ENTRY FEE</strong><span>₹100</span></p></div>
+      </div>
+      <div className="hero-actions"><Link className="reference-login" href="/login"><ArrowRight size={18}/>Participant login</Link><a className="reference-explore" href="#challenge">Explore the challenge <ArrowDown size={16}/></a></div>
+      <div className="scroll-cue"><Mouse size={20}/><span>SCROLL TO DISCOVER</span></div>
+    </motion.div>
+    <motion.aside className="hero-side-copy" initial={{opacity:0,x:14}} animate={{opacity:1,x:0}} transition={{delay:.55,duration:.75}} aria-hidden="true"><i/><span>THINK</span><span>ANALYZE</span><span>CREATE</span><span>REFINE</span><span>SOLVE</span></motion.aside>
+    <p className="hero-platform-note"><i/>A PLATFORM FOR<br/>THE NEXT GENERATION<br/>OF PROBLEM SOLVERS</p>
+  </section>
+  <section id="challenge" className="challenge-teaser"><p><i/>01 / THE CHALLENGE</p><h2>THREE ROUNDS.<br/>THREE WAYS TO THINK.</h2><div><span>ONE SKILL — PRECISION.</span><button aria-label="Previous challenge"><ArrowLeft/></button><button aria-label="Next challenge"><ArrowRight/></button></div></section>
   <motion.section className="intro-section editorial-section" {...reveal}><div className="section-index">01</div><div><p className="eyebrow"><span>01 / </span>WHAT IS PROMPTHON?</p><h2>Beyond asking.<br/>Into engineering.</h2></div><div className="intro-copy"><p className="large-copy">Prompthon is an AI prompt engineering challenge where participants learn to think beyond simply asking AI questions.</p><p>Competitors discover missing information, formulate precise prompts, reverse-engineer outputs and translate visual observations into structured instructions.</p><div className="code-note"><Braces size={18}/><span>clarity + context + constraints = precision</span></div></div></motion.section>
-  <section id="challenge" className="rounds-section"><header className="section-heading"><p className="eyebrow"><span>02 / </span>THE CHALLENGE</p><h2>Three rounds.<br/>Three ways to think.<br/><em>One skill — precision.</em></h2></header>{rounds.map(round=><RoundEditorial round={round} key={round.id}/>)}</section>
+  <section className="rounds-section"><header className="section-heading"><p className="eyebrow"><span>02 / </span>THE CHALLENGE</p><h2>Three rounds.<br/>Three ways to think.<br/><em>One skill — precision.</em></h2></header>{rounds.map(round=><RoundEditorial round={round} key={round.id}/>)}</section>
   <motion.section className="flow-section editorial-section" {...reveal}><div><p className="eyebrow"><span>03 / </span>HOW IT WORKS</p><h2>Access is earned.<br/>Round by round.</h2><p className="page-copy">Every stage is reviewed. Approval unlocks the next challenge; rejection closes access with clarity.</p></div><div className="flow-track">{['Participant login','Round 01','Submit evidence','Admin review','Approved','Round 02 unlocked','Admin review','Round 03','Final evaluation'].map((step,i)=><div className="flow-step" key={step}><span>{String(i+1).padStart(2,'0')}</span><i/><strong>{step}</strong>{i<8&&<ArrowDown size={13}/>}</div>)}<div className="reject-branch"><CornerDownRight size={16}/><span>REJECTED → ROUND ACCESS ENDS</span></div></div></motion.section>
   <motion.section className="details-section" {...reveal}><p className="eyebrow"><span>04 / </span>EVENT PARAMETERS</p><div className="details-grid">{[['DATE','12 SEP 2026'],['TIME','9:00 AM — 4:00 PM'],['TEAM SIZE','1—3 MEMBERS'],['REGISTRATION FEE','₹100'],['EVENT DURATION','5 HOURS'],['TARGET','GRADES 9—12'],['TOOLS','FREE-TIER AI TOOLS']].map(([k,v])=><div key={k}><span>{k}</span><strong>{v}</strong></div>)}</div></motion.section>
   <PrizeSection/>
-  <motion.section className="coordinator-section editorial-section" {...reveal}><div><p className="eyebrow"><span>06 / </span>STUDENT COORDINATORS</p><h2>Direct line<br/>to the event.</h2></div><div className="contact-list"><a href="tel:+919808144754"><span>Karthick Vamsi</span><strong>98081 44754</strong></a><a href="tel:+919445423155"><span>Hemachandran</span><strong>94454 23155</strong></a></div></motion.section>
+  <motion.section id="contact" className="coordinator-section editorial-section" {...reveal}><div><p className="eyebrow"><span>06 / </span>STUDENT COORDINATORS</p><h2>Direct line<br/>to the event.</h2></div><div className="contact-list"><a href="tel:+919808144754"><span>Karthick Vamsi</span><strong>98081 44754</strong></a><a href="tel:+919445423155"><span>Hemachandran</span><strong>94454 23155</strong></a></div></motion.section>
   <FinalCta/>
   </main></PublicLayout>; }
 

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import './reference.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -13,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://prompthon-2026-eec.dreamy-dill-0054.chatgpt.site'),
+  metadataBase: new URL('https://prompthon-2026-eec.harishjayasri.chatgpt.site'),
   title: 'PROMPTHON 2026 — AI Prompt Engineering Hackathon',
   description: 'The official AI Prompt Engineering Hackathon by the Department of Computer Science and Business Systems, Easwari Engineering College.',
   openGraph: {
