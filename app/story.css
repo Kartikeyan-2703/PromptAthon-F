@@ -17,6 +17,24 @@
   isolation: isolate;
 }
 
+.challenge-teaser {
+  position: relative;
+  background:
+    linear-gradient(90deg, rgba(21, 72, 39, .025), transparent 28%, transparent 72%, rgba(21, 72, 39, .018)),
+    #020403;
+}
+
+.challenge-teaser::after {
+  content: "";
+  position: absolute;
+  left: clamp(40px, 5vw, 82px);
+  right: clamp(40px, 5vw, 82px);
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(58, 188, 106, .24) 18%, rgba(222, 234, 225, .06) 48%, transparent 88%);
+  box-shadow: 0 0 10px rgba(39, 183, 94, .045);
+}
+
 .editorial-section::after,
 .rounds-section::after,
 .details-section::after,
@@ -49,11 +67,24 @@
 }
 
 .intro-section {
-  min-height: 640px;
+  min-height: 0;
+  padding-top: 58px;
+  padding-bottom: 98px;
   align-items: start;
   background:
-    radial-gradient(circle at 62% 55%, rgba(26, 111, 55, .045), transparent 22%),
+    radial-gradient(circle at 61% 47%, rgba(26, 111, 55, .045), transparent 22%),
+    linear-gradient(112deg, transparent 31%, rgba(185, 202, 190, .012) 31.08%, transparent 31.16%),
     linear-gradient(180deg, #030504, #020302);
+}
+
+.intro-section::after {
+  background-image:
+    radial-gradient(circle at 17% 29%, rgba(81, 207, 128, .15) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 76% 68%, rgba(81, 207, 128, .1) 0 1px, transparent 1.5px),
+    linear-gradient(rgba(157, 174, 161, .022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(157, 174, 161, .022) 1px, transparent 1px);
+  background-size: 320px 240px, 410px 310px, 64px 64px, 64px 64px;
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
 }
 
 .intro-section::before {
@@ -62,24 +93,85 @@
   bottom: 54px;
 }
 
-.intro-section > div:nth-child(2),
+.intro-grid-reveal {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+}
+
+.intro-grid-reveal i,
+.intro-grid-reveal span {
+  position: absolute;
+  display: block;
+  background: linear-gradient(90deg, transparent, rgba(65, 173, 104, .095), rgba(217, 232, 221, .035), transparent);
+}
+
+.intro-grid-reveal i {
+  left: 9%;
+  right: 5%;
+  top: 31%;
+  height: 1px;
+}
+
+.intro-grid-reveal span {
+  top: 8%;
+  bottom: 9%;
+  left: 57%;
+  width: 1px;
+  background: linear-gradient(transparent, rgba(65, 173, 104, .08), rgba(217, 232, 221, .025), transparent);
+}
+
+.intro-grid-reveal b {
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  left: calc(57% - 3px);
+  top: calc(31% - 3px);
+  border: 1px solid rgba(82, 204, 126, .19);
+  background: #030504;
+  box-shadow: 0 0 12px rgba(54, 192, 108, .09);
+}
+
+.intro-heading,
 .intro-copy {
   position: relative;
   z-index: 2;
 }
 
 .about-blueprint {
-  width: min(430px, 100%);
-  margin-top: 62px;
-  padding: 18px 20px;
+  width: min(610px, 100%);
+  margin-top: 34px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
   border: 1px solid rgba(206, 224, 211, .075);
-  background: linear-gradient(130deg, rgba(28, 105, 53, .045), transparent 60%), rgba(3, 6, 4, .78);
+  background:
+    linear-gradient(130deg, rgba(28, 105, 53, .055), transparent 54%),
+    linear-gradient(rgba(157, 174, 161, .018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(157, 174, 161, .018) 1px, transparent 1px),
+    rgba(3, 6, 4, .82);
+  background-size: auto, 22px 22px, 22px 22px, auto;
   box-shadow: inset 0 1px rgba(227, 244, 232, .035), 0 22px 60px rgba(0, 0, 0, .2);
 }
 
-.about-blueprint::before {
-  content: "PROMPT PIPELINE / LOGIC MAP";
-  display: block;
+.about-blueprint::after {
+  content: "";
+  position: absolute;
+  top: -35%;
+  right: -12%;
+  width: 58%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(78, 165, 108, .055);
+  border-radius: 50%;
+  box-shadow: 0 0 0 28px rgba(62, 148, 92, .018), 0 0 0 62px rgba(62, 148, 92, .012);
+  pointer-events: none;
+}
+
+.about-blueprint > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(222, 236, 226, .06);
   color: #566159;
@@ -87,7 +179,24 @@
   letter-spacing: .14em;
 }
 
-.about-blueprint > div {
+.about-blueprint > header b {
+  color: #3d4a40;
+  font-weight: 500;
+}
+
+.blueprint-schematic {
+  display: grid;
+  grid-template-columns: minmax(120px, .8fr) minmax(150px, 1fr);
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.blueprint-steps {
+  padding-top: 8px;
+}
+
+.blueprint-steps > div {
   display: grid;
   grid-template-columns: 28px 1fr;
   align-items: center;
@@ -98,21 +207,82 @@
   letter-spacing: .12em;
 }
 
-.about-blueprint span {
+.blueprint-steps span {
   color: #465048;
 }
 
-.about-blueprint strong {
+.blueprint-steps strong {
   font-weight: 500;
 }
 
-.about-blueprint i {
+.blueprint-steps i {
   position: absolute;
   left: 12px;
   top: 25px;
   width: 1px;
   height: 19px;
   background: linear-gradient(var(--green-border), transparent);
+}
+
+.blueprint-object {
+  min-height: 184px;
+  padding: 17px 0 8px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 1px solid rgba(222, 236, 226, .055);
+  color: #536057;
+  font: 7px var(--font-geist-mono);
+  letter-spacing: .12em;
+}
+
+.logic-ring {
+  width: 88px;
+  height: 88px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(67, 179, 106, .13);
+  border-radius: 50%;
+  box-shadow: inset 0 0 28px rgba(32, 151, 79, .035), 0 0 0 12px rgba(98, 125, 106, .018);
+}
+
+.logic-ring::before,
+.logic-ring::after {
+  content: "";
+  position: absolute;
+  background: rgba(80, 153, 103, .1);
+}
+
+.logic-ring::before {
+  width: 118px;
+  height: 1px;
+}
+
+.logic-ring::after {
+  width: 1px;
+  height: 118px;
+}
+
+.logic-ring i {
+  width: 52px;
+  height: 52px;
+  position: absolute;
+  border: 1px dashed rgba(84, 184, 116, .18);
+  border-radius: 50%;
+}
+
+.logic-ring b {
+  color: var(--green-muted);
+  font: 500 16px var(--font-geist-mono);
+  text-shadow: 0 0 12px rgba(47, 190, 101, .08);
+}
+
+.blueprint-object small {
+  color: #425047;
+  font: 6px var(--font-geist-mono);
+  letter-spacing: .1em;
 }
 
 .code-note {
@@ -592,6 +762,15 @@
 }
 
 @media (max-width: 1100px) {
+  .blueprint-schematic {
+    grid-template-columns: minmax(110px, .9fr) minmax(120px, 1fr);
+    gap: 14px;
+  }
+
+  .blueprint-object {
+    padding-left: 14px;
+  }
+
   .round-editorial {
     min-height: 520px;
   }
@@ -616,8 +795,14 @@
     min-height: auto;
   }
 
+  .intro-section {
+    padding-top: 56px;
+    padding-bottom: 82px;
+  }
+
   .about-blueprint {
-    margin-top: 40px;
+    width: min(560px, 100%);
+    margin-top: 30px;
   }
 
   .round-editorial {
@@ -652,6 +837,16 @@
 }
 
 @media (max-width: 600px) {
+  .intro-section {
+    padding-top: 48px;
+    padding-bottom: 70px;
+  }
+
+  .intro-grid-reveal span,
+  .intro-grid-reveal b {
+    display: none;
+  }
+
   .editorial-section::before,
   .rounds-section::before,
   .details-section::before,
@@ -662,6 +857,14 @@
 
   .about-blueprint {
     padding: 15px;
+  }
+
+  .blueprint-schematic {
+    grid-template-columns: 1fr;
+  }
+
+  .blueprint-object {
+    display: none;
   }
 
   .round-signal {

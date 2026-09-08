@@ -9,8 +9,10 @@ import { PublicLayout } from '@/components/layout/PublicLayout';
 import { PageIntro } from '@/components/ui';
 
 const reveal = { initial:{opacity:0,y:24}, whileInView:{opacity:1,y:0}, viewport:{once:true,amount:.18}, transition:{duration:.65,ease:[.16,1,.3,1] as const} };
+const introSequence = { hidden:{}, visible:{transition:{staggerChildren:.12,delayChildren:.08}} };
+const introItem = { hidden:{opacity:0,y:18}, visible:{opacity:1,y:0,transition:{duration:.65,ease:[.16,1,.3,1] as const}} };
 const roundSignals: Record<number,string[]> = {
-  1: ['VAGUE INPUT','IDENTIFY','QUESTION','STRUCTURE','PRECISE PROMPT'],
+  1: ['VAGUE INPUT','DISCOVER','QUESTION','STRUCTURE','PRECISE PROMPT'],
   2: ['OUTPUT','ANALYZE','INFER','RECONSTRUCT','PROMPT'],
   3: ['IMAGE','OBSERVE','MAP','DESCRIBE','RECREATE'],
 };
@@ -47,7 +49,22 @@ export function HomePage() { return <PublicLayout><main className="home-main">
     <p className="hero-platform-note"><i/>A PLATFORM FOR<br/>THE NEXT GENERATION<br/>OF PROBLEM SOLVERS</p>
   </section>
   <section id="challenge" className="challenge-teaser"><p><i/>01 / THE CHALLENGE</p><h2>THREE ROUNDS.<br/>THREE WAYS TO THINK.</h2><div><span>ONE SKILL — PRECISION.</span><button aria-label="Previous challenge"><ArrowLeft/></button><button aria-label="Next challenge"><ArrowRight/></button></div></section>
-  <motion.section className="intro-section editorial-section" {...reveal}><div className="section-index">01</div><div><p className="eyebrow"><span>01 / </span>WHAT IS PROMPTHON?</p><h2>Beyond asking.<br/>Into engineering.</h2><motion.div className="about-blueprint" initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true,amount:.5}} transition={{duration:1}} aria-hidden="true">{['INPUT','CONTEXT','CONSTRAINTS','PROMPT','OUTPUT'].map((step,index)=><div key={step}><span>{String(index+1).padStart(2,'0')}</span><strong>{step}</strong>{index<4&&<i/>}</div>)}</motion.div></div><div className="intro-copy"><p className="large-copy">Prompthon is an AI prompt engineering challenge where participants learn to think beyond simply asking AI questions.</p><p>Competitors discover missing information, formulate precise prompts, reverse-engineer outputs and translate visual observations into structured instructions.</p><div className="code-note"><Braces size={18}/><span>clarity + context + constraints = precision</span></div></div></motion.section>
+  <motion.section className="intro-section editorial-section" variants={introSequence} initial="hidden" whileInView="visible" viewport={{once:true,amount:.12}}>
+    <motion.div className="section-index" variants={introItem}>01</motion.div>
+    <motion.div className="intro-grid-reveal" variants={introItem} aria-hidden="true"><i/><span/><b/></motion.div>
+    <div className="intro-heading">
+      <motion.p className="eyebrow" variants={introItem}><span>01 / </span>WHAT IS PROMPTHON?</motion.p>
+      <motion.h2 variants={introItem}>Beyond asking.<br/>Into engineering.</motion.h2>
+      <motion.div className="about-blueprint" variants={introItem} aria-hidden="true">
+        <header><span>PROMPT PIPELINE / LOGIC MAP</span><b>SYS.01</b></header>
+        <div className="blueprint-schematic">
+          <div className="blueprint-steps">{['INPUT','CONTEXT','CONSTRAINTS','PROMPT','OUTPUT'].map((step,index)=><div key={step}><span>{String(index+1).padStart(2,'0')}</span><strong>{step}</strong>{index<4&&<i/>}</div>)}</div>
+          <div className="blueprint-object"><span>PRECISION ENGINE</span><div className="logic-ring"><i/><b>05</b></div><small>CONSTRAINT LOCK / VERIFIED</small></div>
+        </div>
+      </motion.div>
+    </div>
+    <motion.div className="intro-copy" variants={introItem}><p className="large-copy">Prompthon is an AI prompt engineering challenge where participants learn to think beyond simply asking AI questions.</p><p>Competitors discover missing information, formulate precise prompts, reverse-engineer outputs and translate visual observations into structured instructions.</p><motion.div className="code-note" variants={introItem}><Braces size={18}/><span>clarity + context + constraints = precision</span></motion.div></motion.div>
+  </motion.section>
   <section className="rounds-section"><header className="section-heading"><p className="eyebrow"><span>02 / </span>THE CHALLENGE</p><h2>Three rounds.<br/>Three ways to think.<br/><em>One skill — precision.</em></h2></header>{rounds.map(round=><RoundEditorial round={round} key={round.id}/>)}</section>
   <motion.section className="flow-section editorial-section" {...reveal}><div><p className="eyebrow"><span>03 / </span>HOW IT WORKS</p><h2>Access is earned.<br/>Round by round.</h2><p className="page-copy">Every stage is reviewed. Approval unlocks the next challenge; rejection closes access with clarity.</p></div><div className="flow-track"><motion.i className="flow-progress" initial={{scaleY:0}} whileInView={{scaleY:1}} viewport={{once:true,amount:.25}} transition={{duration:1.4,ease:[.16,1,.3,1]}} aria-hidden="true"/>{['Participant login','Round 01','Submit evidence','Admin review','Approved','Round 02 unlocked','Admin review','Round 03','Final evaluation'].map((step,i)=><motion.div className="flow-step" key={`${step}-${i}`} initial={{opacity:0,x:12}} whileInView={{opacity:1,x:0}} viewport={{once:true,amount:.65}} transition={{duration:.45,delay:i*.035}}><span>{String(i+1).padStart(2,'0')}</span><i/><strong>{step}</strong>{i<8&&<ArrowDown size={13}/>}</motion.div>)}<div className="reject-branch"><CornerDownRight size={16}/><span>REJECTED → ROUND ACCESS ENDS</span></div></div></motion.section>
   <motion.section className="details-section" {...reveal}><header className="details-head"><p className="eyebrow"><span>04 / </span>EVENT PARAMETERS</p><p>TECHNICAL SPECIFICATION / ONE DAY COMPETITION</p></header><div className="details-grid">{[['DATE','12 SEP 2026'],['TIME','9:00 AM — 4:00 PM'],['TEAM SIZE','1—3 MEMBERS'],['REGISTRATION FEE','₹100'],['EVENT DURATION','5 HOURS'],['TARGET','GRADES 9—12'],['TOOLS','FREE-TIER AI TOOLS']].map(([k,v],index)=><motion.div key={k} initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.55}} transition={{duration:.5,delay:index*.045}}><span>{String(index+1).padStart(2,'0')} / {k}</span><strong>{v}</strong><i aria-hidden="true"/></motion.div>)}</div></motion.section>
