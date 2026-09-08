@@ -119,6 +119,7 @@
   .reference-hero-copy .scroll-cue {
     min-height: 54px;
     padding-top: 30px;
+    margin-bottom: 28px;
     flex-shrink: 0;
   }
 }
