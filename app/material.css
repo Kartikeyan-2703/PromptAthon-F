@@ -117,10 +117,12 @@
 
 @media (min-width: 601px) {
   .reference-hero-copy .scroll-cue {
-    min-height: 54px;
-    padding-top: 30px;
-    margin-bottom: 28px;
-    flex-shrink: 0;
+    position: absolute;
+    left: clamp(42px, 5.25vw, 86px);
+    bottom: 30px;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
   }
 }
 
