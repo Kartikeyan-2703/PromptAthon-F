@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowDown, ArrowLeft, ArrowRight, Braces, CalendarDays, Check, Clock3, CornerDownRight, IndianRupee, Mouse, ScanLine, Users } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowRight, Box, Braces, CalendarDays, Check, Clock3, CornerDownRight, FileInput, IndianRupee, Layers3, Mouse, ScanLine, SlidersHorizontal, SquareTerminal, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { rounds, rules } from '@/lib/mock-data';
 import { PublicLayout } from '@/components/layout/PublicLayout';
@@ -12,11 +12,11 @@ const reveal = { initial:{opacity:0,y:24}, whileInView:{opacity:1,y:0}, viewport
 const introSequence = { hidden:{}, visible:{transition:{staggerChildren:.12,delayChildren:.08}} };
 const introItem = { hidden:{opacity:0,y:18}, visible:{opacity:1,y:0,transition:{duration:.65,ease:[.16,1,.3,1] as const}} };
 const promptPipeline = [
-  ['INPUT','Vague problem or observation'],
-  ['CONTEXT','Identify missing information'],
-  ['CONSTRAINTS','Define boundaries and requirements'],
-  ['PROMPT','Structure a precise prompt'],
-  ['OUTPUT','Accurate, useful result'],
+  { step:'INPUT', copy:'Vague problem or observation', Icon:FileInput },
+  { step:'CONTEXT', copy:'Identify missing information', Icon:Layers3 },
+  { step:'CONSTRAINTS', copy:'Define boundaries and requirements', Icon:SlidersHorizontal },
+  { step:'PROMPT', copy:'Structure a precise prompt', Icon:SquareTerminal },
+  { step:'OUTPUT', copy:'Accurate, useful result', Icon:Box },
 ];
 const homeRules = [
   ['01','TEAM SIZE','1–3 MEMBERS'],
@@ -64,8 +64,9 @@ export function HomePage() { return <PublicLayout><main className="home-main">
     <motion.aside className="hero-side-copy" initial={{opacity:0,x:14}} animate={{opacity:1,x:0}} transition={{delay:.55,duration:.75}} aria-hidden="true"><i/><span>THINK</span><span>ANALYZE</span><span>CREATE</span><span>REFINE</span><span>SOLVE</span></motion.aside>
     <p className="hero-platform-note"><i/>A PLATFORM FOR<br/>THE NEXT GENERATION<br/>OF PROBLEM SOLVERS</p>
   </section>
-  <section id="challenge" className="challenge-teaser"><p><i/>01 / THE CHALLENGE</p><h2>THREE ROUNDS.<br/>THREE WAYS TO THINK.</h2><div><span>ONE SKILL — PRECISION.</span><button aria-label="Previous challenge"><ArrowLeft/></button><button aria-label="Next challenge"><ArrowRight/></button></div></section>
   <motion.section className="intro-section editorial-section" variants={introSequence} initial="hidden" whileInView="visible" viewport={{once:true,amount:.12}}>
+    <Image className="intro-architecture" src="/prompthon-about-environment.png" alt="" fill sizes="100vw" aria-hidden="true"/>
+    <div className="intro-architecture-shade" aria-hidden="true"/>
     <motion.div className="section-index" variants={introItem}>01</motion.div>
     <motion.div className="intro-grid-reveal" variants={introItem} aria-hidden="true"><i/><span/><b/></motion.div>
     <div className="intro-heading">
@@ -76,12 +77,12 @@ export function HomePage() { return <PublicLayout><main className="home-main">
     <motion.div className="intro-copy" variants={introItem}><p className="large-copy">Prompthon is an AI prompt engineering challenge where participants learn to think beyond simply asking AI questions.</p><p>Competitors discover missing information, formulate precise prompts, reverse-engineer outputs and translate visual observations into structured instructions.</p><motion.div className="code-note" variants={introItem}><Braces size={18}/><span>clarity + context + constraints = precision</span></motion.div></motion.div>
     <motion.div className="about-blueprint" variants={introItem} aria-hidden="true">
       <header><span><em>PROMPT PIPELINE</em> / LOGIC MAP</span><b>SYS.01</b><small>FROM AMBIGUITY<br/>TO IMPACT</small></header>
-      <div className="blueprint-schematic"><div className="blueprint-signal"/>{promptPipeline.map(([step,copy],index)=><div className="blueprint-stage" key={step}><span>{String(index+1).padStart(2,'0')}</span><b className={`pipeline-glyph glyph-${index+1}`}/><strong>{step}</strong><small>{copy}</small><i/></div>)}</div>
+      <div className="blueprint-schematic"><div className="blueprint-signal"/>{promptPipeline.map(({step,copy,Icon},index)=><div className="blueprint-stage" key={step}><span>{String(index+1).padStart(2,'0')}</span><div className="pipeline-glyph"><Icon size={19} strokeWidth={1.45}/></div><strong>{step}</strong><small>{copy}</small><i/></div>)}</div>
     </motion.div>
     <aside className="intro-annotation intro-annotation-left" aria-hidden="true"><i/><span>HUMAN IDEAS</span><b>+</b><span>AI POSSIBILITIES</span><b>=</b><span>BIGGER SOLUTIONS</span></aside>
     <aside className="intro-annotation intro-annotation-right" aria-hidden="true"><i/><span>IDEAS</span><span>PROMPTS</span><span>OUTPUTS</span><span>IMPACT</span></aside>
-    <div className="intro-floor" aria-hidden="true"/>
   </motion.section>
+  <section id="challenge" className="challenge-teaser"><p><i/>02 / THE CHALLENGE</p><h2>THREE ROUNDS.<br/>THREE WAYS TO THINK.</h2><div><span>ONE SKILL — PRECISION.</span><button aria-label="Previous challenge"><ArrowLeft/></button><button aria-label="Next challenge"><ArrowRight/></button></div></section>
   <section className="rounds-section"><header className="section-heading"><p className="eyebrow"><span>02 / </span>THE CHALLENGE</p><h2>Three rounds.<br/>Three ways to think.<br/><em>One skill — precision.</em></h2></header>{rounds.map(round=><RoundEditorial round={round} key={round.id}/>)}</section>
   <motion.section className="flow-section editorial-section" {...reveal}><div><p className="eyebrow"><span>03 / </span>HOW IT WORKS</p><h2>From first prompt<br/>to final evaluation.</h2><p className="page-copy">Every stage is reviewed. Approval unlocks the next challenge; rejection closes access with clarity.</p></div><div className="flow-track"><motion.i className="flow-progress" initial={{scaleY:0}} whileInView={{scaleY:1}} viewport={{once:true,amount:.25}} transition={{duration:1.4,ease:[.16,1,.3,1]}} aria-hidden="true"/>{['Access','Round 01','Submission','Admin review','Approved','Round 02','Admin review','Round 03','Final evaluation'].map((step,i)=><motion.div className="flow-step" key={`${step}-${i}`} initial={{opacity:0,x:12}} whileInView={{opacity:1,x:0}} viewport={{once:true,amount:.65}} transition={{duration:.45,delay:i*.035}}><span>{String(i+1).padStart(2,'0')}</span><i/><strong>{step}</strong>{i<8&&<ArrowDown size={13}/>}</motion.div>)}<div className="reject-branch"><CornerDownRight size={16}/><span>NOT APPROVED → COMPETITION ENDS FOR TEAM</span></div></div></motion.section>
   <motion.section className="details-section" {...reveal}><header className="details-head"><div><p className="eyebrow"><span>04 / </span>EVENT SPECIFICATION</p><h2>One day.<br/>Precisely defined.</h2></div><p>TECHNICAL SPECIFICATION / ONE DAY COMPETITION</p></header><div className="details-grid">{[['DATE','12 SEP 2026'],['TIME','9:00 AM — 4:00 PM'],['DURATION','5 HOURS'],['TEAM SIZE','1—3 MEMBERS'],['REGISTRATION FEE','₹100'],['TARGET','GRADES 9—12'],['TOOLS','FREE-TIER AI TOOLS']].map(([k,v],index)=><motion.div key={k} initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.55}} transition={{duration:.5,delay:index*.045}}><span>{String(index+1).padStart(2,'0')} / {k}</span><strong>{v}</strong><i aria-hidden="true"/></motion.div>)}</div></motion.section>
