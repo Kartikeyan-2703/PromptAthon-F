@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowDown, ArrowRight, Box, Braces, CalendarDays, Check, CircleHelp, Clock3, Eye, FileInput, FileText, GitBranch, ImageIcon, IndianRupee, Layers3, Lightbulb, ListChecks, MessageSquareText, Mouse, ScanLine, Search, SlidersHorizontal, SquareTerminal, Users } from 'lucide-react';
+import { ArrowDown, ArrowRight, Box, Braces, CalendarDays, Check, CircleHelp, Clock3, Eye, FileInput, FileText, GitBranch, ImageIcon, IndianRupee, Layers3, Lightbulb, ListChecks, MessageSquareText, Mouse, Search, SlidersHorizontal, SquareTerminal, Users } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { rounds, rules } from '@/lib/mock-data';
@@ -161,7 +161,34 @@ function PrizeSection(){ return <motion.section id="prizes" className="prize-sec
     </footer>
   </div>
 </motion.section>; }
-function FinalCta(){ return <section className="final-cta"><div className="closing-system" aria-hidden="true"><span>INPUT</span><i/><span>INTENT</span><i/><span>OUTPUT</span></div><div className="scanline"><ScanLine/></div><p className="eyebrow">&gt; AWAITING INPUT_</p><h2>THINK LIKE A HACKER.<br/><span>PROMPT LIKE A PRO.</span></h2><p>THE CHALLENGE BEGINS WITH A BLANK INPUT.</p><Link className="primary-button" href="/login">Participant login <ArrowRight size={17}/></Link><small className="system-close">PROMPTHON.EXE / READY FOR INITIALIZATION</small></section>; }
+function ClosingPanel({ side }: { side:'input'|'output' }) {
+  const isInput = side === 'input';
+  return <motion.aside className={`closing-panel closing-panel-${side}`} aria-hidden="true" initial={{opacity:0,x:isInput?-34:34,y:12}} whileInView={{opacity:1,x:0,y:0}} viewport={{once:true,amount:.35}} transition={{duration:.9,delay:.3,ease:[.16,1,.3,1]}}>
+    <div className="closing-panel-dots"><i/><i/><i/></div>
+    <span>{isInput?'INPUT':'OUTPUT'}</span>
+    <p><b>&gt;</b>{isInput?<><em>A BLANK INPUT</em><em>CAN LEAD TO</em><em>A BRIGHTER</em><em>TOMORROW.</em></>:<><em>SOLUTIONS</em><em>IDEAS</em><em>OPPORTUNITIES</em><em>REAL IMPACT</em></>}</p>
+    <small>_</small>
+  </motion.aside>;
+}
+
+function FinalCta(){ return <motion.section className="final-cta" aria-labelledby="closing-heading" initial="hidden" whileInView="visible" viewport={{once:true,amount:.2}} variants={{hidden:{opacity:0},visible:{opacity:1,transition:{duration:.8,staggerChildren:.11}}}}>
+  <Image className="closing-environment" src="/prompthon-closing-environment.png" alt="" fill sizes="100vw" aria-hidden="true"/>
+  <div className="closing-environment-light" aria-hidden="true"/>
+  <div className="closing-particles" aria-hidden="true"/>
+  <ClosingPanel side="input"/><ClosingPanel side="output"/>
+  <aside className="closing-note closing-note-left" aria-hidden="true"><i/>IDEAS<br/>PROMPTS<br/>PEOPLE<br/>IMPACT</aside>
+  <aside className="closing-note closing-note-right" aria-hidden="true"><i/>SAME<br/>QUESTIONS.<br/>BIGGER<br/>POSSIBILITIES.</aside>
+  <aside className="closing-note closing-note-process" aria-hidden="true"><i/>THINK<br/>ANALYZE<br/>CREATE<br/>SOLVE<br/>REPEAT</aside>
+  <motion.div className="closing-content" variants={introItem}>
+    <p className="closing-kicker"><i/>PROMPTHON 2026<i/></p>
+    <h2 id="closing-heading">THINK LIKE A HACKER.<br/><span>PROMPT LIKE A PRO.</span></h2>
+    <p className="closing-subtitle">THE CHALLENGE BEGINS WITH A BLANK INPUT.</p>
+    <Link className="closing-login" href="/login"><span>[</span><ArrowRight size={16}/>PARTICIPANT LOGIN<span>]</span></Link>
+    <p className="closing-keywords">IDEAS&nbsp; / &nbsp;INNOVATION&nbsp; / &nbsp;INTELLIGENCE&nbsp; / &nbsp;IMPACT</p>
+  </motion.div>
+  <div className="closing-platform-copy" aria-hidden="true"><i/>FROM CURIOSITY TO CLARITY&nbsp;&nbsp; // &nbsp;&nbsp;FROM PROMPTS TO POSSIBILITIES<i/></div>
+  <footer className="closing-footer-notes" aria-hidden="true"><span><i/>POWERED BY<br/>A COMMUNITY THAT<br/>BUILDS TOMORROW.</span><span><i/>MORE THAN<br/>A HACKATHON.<br/>A THINKING REVOLUTION.</span></footer>
+</motion.section>; }
 
 export function AboutPage(){ return <PublicLayout><main className="public-page"><PageIntro index="01" eyebrow="ABOUT THE SYSTEM" title="Precision is not a feature. It is the discipline." copy="PROMPTHON 2026 is an official technical event created by the Department of Computer Science and Business Systems, Easwari Engineering College."/><section className="manifesto-grid"><motion.div {...reveal}><p className="big-statement">AI is only as useful as the thinking that directs it.</p></motion.div><motion.div className="prose" {...reveal}><p>Prompthon asks participants to move past casual prompting and work like engineers: uncover ambiguity, define constraints, test assumptions and communicate intent with clarity.</p><p>The competition is designed for students in Grades 9—12 and rewards thoughtful iteration over lucky output.</p></motion.div></section><section className="principles"><p className="eyebrow">COMPETITION PRINCIPLES</p>{[['01','Discover before directing'],['02','Make constraints explicit'],['03','Prove every result'],['04','Optimize for useful output']].map(([n,t])=><div key={n}><span>{n}</span><h3>{t}</h3><Check size={18}/></div>)}</section><section className="institution-block"><div><p className="eyebrow">ORGANIZED BY</p><h2>Department of Computer Science<br/>and Business Systems</h2></div><p>Easwari Engineering College<br/>12 September 2026</p></section></main></PublicLayout>; }
 
