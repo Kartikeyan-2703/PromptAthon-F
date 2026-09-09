@@ -1469,7 +1469,7 @@
   position: relative;
   isolation: isolate;
   width: 100%;
-  min-height: max(760px, 100svh);
+  min-height: max(700px, calc(100svh - 88px));
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -1488,23 +1488,23 @@
   z-index: 2;
   inset: 0;
   background:
-    radial-gradient(ellipse at 61% 54%, rgba(42, 168, 92, .075), transparent 25%),
-    radial-gradient(ellipse at 51% 91%, rgba(74, 207, 125, .045), transparent 25%),
-    linear-gradient(90deg, rgba(1, 2, 1, .18), transparent 34%, transparent 74%, rgba(1, 2, 1, .18));
+    radial-gradient(ellipse at 61% 54%, rgba(53, 196, 108, .14), transparent 27%),
+    radial-gradient(ellipse at 53% 84%, rgba(92, 226, 144, .095), transparent 30%),
+    linear-gradient(90deg, rgba(1, 2, 1, .08), transparent 30%, transparent 80%, rgba(1, 2, 1, .08));
   mix-blend-mode: screen;
 }
 
 .prize-section::after {
   z-index: 5;
   inset: 0;
-  box-shadow: inset 0 0 130px rgba(0, 0, 0, .72);
+  box-shadow: inset 0 0 105px rgba(0, 0, 0, .43);
 }
 
 .prize-environment {
   z-index: 0;
   object-fit: cover;
   object-position: center;
-  filter: brightness(.64) saturate(.72) contrast(1.1);
+  filter: brightness(.98) saturate(.9) contrast(1.06);
 }
 
 .prize-environment-shade {
@@ -1512,8 +1512,8 @@
   z-index: 1;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(1, 2, 1, .96) 0%, rgba(1, 2, 1, .82) 25%, rgba(1, 2, 1, .18) 49%, rgba(1, 2, 1, .08) 75%, rgba(1, 2, 1, .38) 100%),
-    linear-gradient(180deg, rgba(1, 2, 1, .92) 0%, rgba(1, 2, 1, .12) 31%, transparent 58%, rgba(1, 2, 1, .38) 100%);
+    linear-gradient(90deg, rgba(1, 2, 1, .73) 0%, rgba(1, 2, 1, .52) 25%, rgba(1, 2, 1, .07) 48%, transparent 76%, rgba(1, 2, 1, .18) 100%),
+    linear-gradient(180deg, rgba(1, 2, 1, .62) 0%, rgba(1, 2, 1, .04) 30%, transparent 62%, rgba(1, 2, 1, .16) 100%);
 }
 
 .prize-technical-grid {
@@ -1534,14 +1534,14 @@
   position: relative;
   z-index: 3;
   width: min(1680px, 100%);
-  min-height: max(760px, 100svh);
+  min-height: max(700px, calc(100svh - 88px));
   margin: auto;
 }
 
 .prize-copy {
   position: absolute;
   z-index: 8;
-  top: clamp(92px, 13vh, 130px);
+  top: clamp(64px, 8vh, 86px);
   left: clamp(48px, 7.2vw, 122px);
   width: min(34vw, 510px);
 }
@@ -1638,12 +1638,38 @@
   z-index: 7;
   left: 35.5%;
   right: 8.2%;
-  bottom: 14.5%;
-  height: 62%;
+  bottom: 20%;
+  height: 64%;
   display: grid;
   grid-template-columns: 31% 39% 30%;
   align-items: end;
   perspective: 1200px;
+}
+
+.prize-stage::before,
+.prize-stage::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.prize-stage::before {
+  left: -12%;
+  right: -10%;
+  bottom: -1%;
+  height: 46%;
+  background: radial-gradient(ellipse at 50% 75%, rgba(55, 205, 110, .18), transparent 63%);
+  filter: blur(18px);
+}
+
+.prize-stage::after {
+  left: -7%;
+  right: -8%;
+  bottom: -2px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(150, 245, 181, .58) 42%, rgba(83, 221, 134, .48) 70%, transparent);
+  box-shadow: 0 0 18px rgba(66, 214, 120, .32);
 }
 
 .prize-monolith {
@@ -1696,9 +1722,10 @@
   border: 1px solid rgba(132, 155, 139, .13);
   border-top-color: rgba(169, 206, 181, .22);
   background:
-    radial-gradient(circle at 81% 4%, rgba(126, 227, 159, .065), transparent 23%),
-    repeating-linear-gradient(114deg, rgba(255,255,255,.018) 0 1px, transparent 1px 26px),
-    linear-gradient(135deg, rgba(33, 47, 37, .74), rgba(6, 9, 7, .97) 43%, #020302);
+    linear-gradient(135deg, rgba(12, 18, 14, .72), rgba(2, 4, 3, .86)),
+    radial-gradient(circle at 81% 4%, rgba(126, 227, 159, .13), transparent 25%),
+    url('/prompthon-prizes-environment.png') left 44% / 520% auto no-repeat,
+    linear-gradient(135deg, #263329, #060907 48%, #020302);
   box-shadow:
     inset 1px 0 rgba(121, 226, 158, .13),
     inset 0 1px rgba(227, 244, 232, .06),
@@ -1709,11 +1736,11 @@
   content: "";
   position: absolute;
   inset: 0;
-  opacity: .45;
+  opacity: .68;
   background:
-    linear-gradient(105deg, transparent 12%, rgba(255,255,255,.025) 13%, transparent 14%),
-    linear-gradient(17deg, transparent 46%, rgba(134, 157, 141, .04) 47%, transparent 48%),
-    radial-gradient(circle at 24% 71%, rgba(150, 177, 158, .06) 0 1px, transparent 2px);
+    linear-gradient(105deg, transparent 12%, rgba(255,255,255,.045) 13%, transparent 14%),
+    linear-gradient(17deg, transparent 46%, rgba(134, 157, 141, .075) 47%, transparent 48%),
+    radial-gradient(circle at 24% 71%, rgba(184, 207, 190, .1) 0 1px, transparent 2px);
   background-size: 130px 180px, 170px 120px, 43px 57px;
   pointer-events: none;
 }
@@ -1722,9 +1749,10 @@
   border-color: rgba(78, 205, 123, .26);
   border-top-color: rgba(181, 241, 201, .62);
   background:
-    radial-gradient(circle at 80% 2%, rgba(134, 237, 170, .13), transparent 25%),
-    repeating-linear-gradient(114deg, rgba(255,255,255,.02) 0 1px, transparent 1px 27px),
-    linear-gradient(135deg, rgba(34, 52, 40, .8), rgba(7, 11, 8, .98) 45%, #020302);
+    linear-gradient(135deg, rgba(13, 22, 16, .66), rgba(2, 5, 3, .82)),
+    radial-gradient(circle at 80% 2%, rgba(144, 245, 179, .22), transparent 27%),
+    url('/prompthon-prizes-environment.png') right 43% / 490% auto no-repeat,
+    linear-gradient(135deg, #2b3c30, #070b08 48%, #020302);
   box-shadow:
     inset 1px 0 rgba(128, 237, 166, .21),
     inset 0 1px rgba(226, 255, 235, .13),
@@ -1823,7 +1851,7 @@
   z-index: 4;
   left: 4%;
   right: 4%;
-  bottom: 14.3%;
+  bottom: 19.8%;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(205, 221, 210, .34) 16%, rgba(99, 207, 137, .32) 64%, transparent);
   box-shadow: 0 0 13px rgba(63, 202, 112, .16);
@@ -1887,7 +1915,7 @@
   .prize-scene { padding: 108px 36px 92px; }
   .prize-environment { object-position: center bottom; }
   .prize-environment-shade {
-    background: linear-gradient(180deg, rgba(1,2,1,.91), rgba(1,2,1,.68) 42%, rgba(1,2,1,.26) 72%, rgba(1,2,1,.68));
+    background: linear-gradient(180deg, rgba(1,2,1,.76), rgba(1,2,1,.45) 42%, rgba(1,2,1,.1) 72%, rgba(1,2,1,.38));
   }
   .prize-copy { position: relative; top: auto; left: auto; width: min(590px,100%); }
   .prize-copy h2 { font-size: clamp(50px, 8vw, 70px); }
