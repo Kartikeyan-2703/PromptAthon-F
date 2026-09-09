@@ -489,7 +489,7 @@
   padding: 0 0 86px;
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow: clip;
   background: #010201;
 }
 
@@ -504,6 +504,22 @@
   mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
 }
 
+.rounds-scene {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  pointer-events: none;
+}
+
+.rounds-scene-sticky {
+  position: sticky;
+  top: 88px;
+  width: 100%;
+  height: calc(100vh - 88px);
+  height: calc(100svh - 88px);
+  overflow: hidden;
+}
+
 .rounds-architecture,
 .rounds-atmosphere {
   position: absolute;
@@ -512,18 +528,17 @@
 }
 
 .rounds-architecture {
-  z-index: -4;
+  z-index: 0;
   opacity: .94;
-  background: url('/prompthon-rounds-environment.png') center top / max(1180px, 100vw) auto repeat-y;
+  background: #010201 url('/prompthon-rounds-environment.png') center center / cover no-repeat;
   filter: brightness(.94) saturate(.88) contrast(1.05);
 }
 
 .rounds-atmosphere {
-  z-index: -3;
+  z-index: 1;
   background:
-    linear-gradient(180deg, rgba(1,2,1,.025), rgba(1,2,1,.08) 15%, rgba(1,2,1,.045) 85%, rgba(1,2,1,.16)),
-    radial-gradient(ellipse at 50% 8%, transparent 0 38%, rgba(0,0,0,.1) 84%),
-    repeating-linear-gradient(180deg, transparent 0 37.35vw, rgba(130,232,164,.1) 37.42vw, transparent 37.58vw);
+    linear-gradient(180deg, rgba(1,2,1,.025), rgba(1,2,1,.07) 18%, rgba(1,2,1,.035) 78%, rgba(1,2,1,.13)),
+    radial-gradient(ellipse at 50% 18%, transparent 0 42%, rgba(0,0,0,.09) 88%);
 }
 
 .rounds-section > .section-heading {
@@ -1116,6 +1131,14 @@
 
 }
 
+@media (max-width: 950px) {
+  .rounds-scene-sticky {
+    top: 72px;
+    height: calc(100vh - 72px);
+    height: calc(100svh - 72px);
+  }
+}
+
 @media (max-width: 800px) {
   .intro-section,
   .coordinator-section {
@@ -1157,7 +1180,8 @@
 
   .rounds-architecture {
     opacity: .86;
-    background-size: auto 410px;
+    background-position: center center;
+    background-size: cover;
     filter: brightness(.9) saturate(.82) contrast(1.05);
   }
 
@@ -1269,6 +1293,12 @@
 }
 
 @media (max-width: 600px) {
+  .rounds-scene-sticky {
+    top: 64px;
+    height: calc(100vh - 64px);
+    height: calc(100svh - 64px);
+  }
+
   .intro-section {
     width: calc(100% - 40px);
     padding-top: 48px;
