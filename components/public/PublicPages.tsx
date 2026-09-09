@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowDown, ArrowLeft, ArrowRight, Box, Braces, CalendarDays, Check, Clock3, FileInput, IndianRupee, Layers3, Mouse, ScanLine, SlidersHorizontal, SquareTerminal, Users } from 'lucide-react';
+import { ArrowDown, ArrowRight, Box, Braces, CalendarDays, Check, CircleHelp, Clock3, Eye, FileInput, FileText, GitBranch, ImageIcon, IndianRupee, Layers3, Lightbulb, ListChecks, MessageSquareText, Mouse, ScanLine, Search, SlidersHorizontal, SquareTerminal, Users } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { rounds, rules } from '@/lib/mock-data';
 import { PublicLayout } from '@/components/layout/PublicLayout';
@@ -18,18 +19,44 @@ const promptPipeline = [
   { step:'PROMPT', copy:'Structure a precise prompt', Icon:SquareTerminal },
   { step:'OUTPUT', copy:'Accurate, useful result', Icon:Box },
 ];
-const roundSignals: Record<number,string[]> = {
-  1: ['VAGUE INPUT','IDENTIFY','QUESTION','STRUCTURE','PRECISE PROMPT'],
-  2: ['OUTPUT','ANALYZE','INFER','RECONSTRUCT','PROMPT'],
-  3: ['IMAGE','OBSERVE','MAP','DESCRIBE','RECREATE'],
+type RoundPipelineStep = { label:string; copy:string; Icon:LucideIcon };
+const roundSignals: Record<number,RoundPipelineStep[]> = {
+  1: [
+    { label:'VAGUE INPUT', copy:'A broad or unclear problem statement.', Icon:MessageSquareText },
+    { label:'IDENTIFY', copy:'Find missing information.', Icon:Search },
+    { label:'QUESTION', copy:'Determine what to ask.', Icon:CircleHelp },
+    { label:'STRUCTURE', copy:'Organize into a precise prompt.', Icon:Layers3 },
+    { label:'PRECISE PROMPT', copy:'A complete and effective prompt.', Icon:FileText },
+  ],
+  2: [
+    { label:'OUTPUT', copy:'An AI-generated response.', Icon:FileText },
+    { label:'ANALYZE', copy:'Study structure, tone and content.', Icon:Search },
+    { label:'INFER', copy:'Identify possible intent and constraints.', Icon:Lightbulb },
+    { label:'RECONSTRUCT', copy:'Rebuild the original prompt.', Icon:GitBranch },
+    { label:'PROMPT', copy:'A faithful reconstructed prompt.', Icon:SquareTerminal },
+  ],
+  3: [
+    { label:'IMAGE', copy:'A reference image as input.', Icon:ImageIcon },
+    { label:'OBSERVE', copy:'Identify key objects and relationships.', Icon:Eye },
+    { label:'MAP', copy:'Understand composition and structure.', Icon:GitBranch },
+    { label:'DESCRIBE', copy:'Translate into detailed language.', Icon:ListChecks },
+    { label:'RECREATE', copy:'A precise image-generation prompt.', Icon:Box },
+  ],
+};
+const roundAnnotations: Record<number,{left:string[];right:string[]}> = {
+  1:{left:['FIND',"WHAT'S",'MISSING'],right:['INFORMATION GAPS','CREATE OPPORTUNITIES.']},
+  2:{left:['REVERSE','ENGINEER','INTELLIGENCE'],right:['EVERY OUTPUT','HAS A REASON.']},
+  3:{left:['SEE','UNDERSTAND','TRANSLATE'],right:['VISUAL THINKING','MEETS','LINGUISTIC PRECISION.']},
 };
 
-function SignalChain({ steps, label }: { steps:string[]; label:string }) { return <motion.div className="round-signal" aria-label={label} initial={{opacity:0,x:16}} whileInView={{opacity:1,x:0}} viewport={{once:true,amount:.55}} transition={{duration:.7,ease:[.16,1,.3,1]}}>{steps.map((step,index)=><div key={step}><span>{step}</span>{index<steps.length-1&&<i/>}</div>)}</motion.div>; }
+function SignalChain({ steps, label }: { steps:RoundPipelineStep[]; label:string }) { return <motion.div className="round-signal" aria-label={label} initial="hidden" whileInView="visible" viewport={{once:true,amount:.45}} variants={{hidden:{opacity:0,y:16},visible:{opacity:1,y:0,transition:{duration:.65,staggerChildren:.08,ease:[.16,1,.3,1]}}}}><div className="round-pipeline-track" aria-hidden="true"/>{steps.map(({label:step,copy,Icon},index)=><motion.div className="round-pipeline-node" key={step} variants={{hidden:{opacity:0,y:10},visible:{opacity:1,y:0}}}><span>{String(index+1).padStart(2,'0')}</span><div className="round-pipeline-icon"><Icon size={21} strokeWidth={1.45}/></div><strong>{step}</strong><small>{copy}</small>{index<steps.length-1&&<i/>}</motion.div>)}</motion.div>; }
 
 function RoundEditorial({ round, compact = false }: { round: typeof rounds[number]; compact?: boolean }) { return <motion.article className={`round-editorial ${compact?'compact':''}`} {...reveal}>
-  <div className="round-num">{round.code}</div><div className="round-rule"/><div className="round-copy"><p className="eyebrow">ROUND {round.code} / CORE CHALLENGE</p><h3>{round.title}</h3><blockquote>“{round.prompt}”</blockquote><p>{round.description}</p><SignalChain steps={roundSignals[round.id]} label={`Round ${round.code} process`}/><div className="skill-list">{round.skills.map(skill=><span key={skill}>{skill}</span>)}</div><small>EVALUATION / {round.evaluation}</small></div>
+  <div className="round-num"><strong>{round.code}</strong><span>{roundAnnotations[round.id].left.map(line=><i key={line}>{line}</i>)}</span></div><div className="round-rule"/><div className="round-copy"><p className="eyebrow">ROUND {round.code} / CORE CHALLENGE</p><h3>{round.title}</h3><blockquote>“{round.prompt}”</blockquote><p>{round.description}</p><SignalChain steps={roundSignals[round.id]} label={`Round ${round.code} process`}/>{compact&&<><div className="skill-list">{round.skills.map(skill=><span key={skill}>{skill}</span>)}</div><small>EVALUATION / {round.evaluation}</small></>}</div><aside className="round-side-note" aria-hidden="true"><i/>{roundAnnotations[round.id].right.map(line=><span key={line}>{line}</span>)}</aside>
   </motion.article>;
 }
+
+function ChallengeSection(){ return <section id="challenge" className="rounds-section"><div className="rounds-architecture" aria-hidden="true"/><div className="rounds-atmosphere" aria-hidden="true"/><header className="section-heading"><aside aria-hidden="true"><i/><span>IDEAS</span><span>PROMPTS</span><span>OUTPUTS</span><span>IMPACT</span></aside><div><p className="eyebrow"><span>02 / </span>THE CHALLENGE</p><h2>Three rounds.<br/>Three ways to think.<br/><em>One skill — precision.</em></h2></div><aside aria-hidden="true"><i/><span>THINK</span><span>ANALYZE</span><span>CREATE</span><span>REFINE</span><span>SOLVE</span></aside></header>{rounds.map(round=><RoundEditorial round={round} key={round.id}/>)}<div className="rounds-footer-rail" aria-hidden="true"><span>SCROLL TO EXPLORE MORE.</span><i/><span>MORE THAN A HACKATHON.<br/>A THINKING REVOLUTION.</span></div></section>; }
 
 export function HomePage() { return <PublicLayout><main className="home-main">
   <section className="reference-hero" aria-labelledby="hero-title">
@@ -76,8 +103,7 @@ export function HomePage() { return <PublicLayout><main className="home-main">
     <aside className="intro-footer-note intro-footer-right" aria-hidden="true"><i/><span>PRECISION<br/>BUILDS<br/>POSSIBILITIES.</span></aside>
     <div className="intro-footer-rail" aria-hidden="true"><span><i/>MORE THAN A HACKATHON.</span><b/><span>A THINKING REVOLUTION.</span></div>
   </motion.section>
-  <section id="challenge" className="challenge-teaser"><p><i/>02 / THE CHALLENGE</p><h2>THREE ROUNDS.<br/>THREE WAYS TO THINK.</h2><div><span>ONE SKILL — PRECISION.</span><button aria-label="Previous challenge"><ArrowLeft/></button><button aria-label="Next challenge"><ArrowRight/></button></div></section>
-  <section className="rounds-section"><header className="section-heading"><p className="eyebrow"><span>02 / </span>THE CHALLENGE</p><h2>Three rounds.<br/>Three ways to think.<br/><em>One skill — precision.</em></h2></header>{rounds.map(round=><RoundEditorial round={round} key={round.id}/>)}</section>
+  <ChallengeSection/>
   <PrizeSection/>
   <motion.section id="contact" className="coordinator-section editorial-section" {...reveal}><div><p className="eyebrow"><span>04 / </span>CONTACT / COORDINATORS</p><h2>Direct line<br/>to the event.</h2><div className="contact-signal" aria-hidden="true"><i/><span>CHANNEL OPEN</span></div></div><div className="contact-list"><a href="tel:+919808144754"><span>Karthick Vamsi</span><strong>98081 44754</strong></a><a href="tel:+919445423155"><span>Hemachandran</span><strong>94454 23155</strong></a></div></motion.section>
   <FinalCta/>
