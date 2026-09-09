@@ -2,18 +2,13 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { AboutPage, PrizesPage, RoundsPage, RulesPage } from '@/components/public/PublicPages';
 import { DashboardPage, ParticipantLogin, ParticipantSubmissions, ProfilePage, RoundPage, RoundThreePage, TeamPage } from '@/components/participant/ParticipantPages';
 import { AdminAudit, AdminDashboard, AdminImport, AdminLogin, AdminParticipantDetail, AdminParticipants, AdminRounds, AdminSubmissions } from '@/components/admin/AdminPages';
 
 export function AppRouter({ path }: { path: string[] }) {
   const route = '/' + path.join('/');
   let page: React.ReactNode;
-  if (route === '/about') page = <AboutPage/>;
-  else if (route === '/rounds') page = <RoundsPage/>;
-  else if (route === '/rules') page = <RulesPage/>;
-  else if (route === '/prizes') page = <PrizesPage/>;
-  else if (route === '/login') page = <ParticipantLogin/>;
+  if (route === '/login') page = <ParticipantLogin/>;
   else if (route === '/dashboard') page = <DashboardPage/>;
   else if (route === '/team') page = <TeamPage/>;
   else if (route === '/round/1') page = <RoundPage roundId={1}/>;

@@ -2,12 +2,11 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowDown, ArrowRight, Box, Braces, CalendarDays, Check, CircleHelp, Clock3, Eye, FileInput, FileText, GitBranch, ImageIcon, IndianRupee, Layers3, Lightbulb, ListChecks, MessageSquareText, Mouse, Search, SlidersHorizontal, SquareTerminal, Users } from 'lucide-react';
+import { ArrowDown, ArrowRight, Box, Braces, CalendarDays, CircleHelp, Clock3, Eye, FileInput, FileText, GitBranch, ImageIcon, IndianRupee, Layers3, Lightbulb, ListChecks, MessageSquareText, Mouse, Search, SlidersHorizontal, SquareTerminal, Users } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { rounds, rules } from '@/lib/mock-data';
 import { PublicLayout } from '@/components/layout/PublicLayout';
-import { PageIntro } from '@/components/ui';
 
 const reveal = { initial:{opacity:0,y:24}, whileInView:{opacity:1,y:0}, viewport:{once:true,amount:.18}, transition:{duration:.65,ease:[.16,1,.3,1] as const} };
 const introSequence = { hidden:{}, visible:{transition:{staggerChildren:.12,delayChildren:.08}} };
@@ -58,8 +57,14 @@ function RoundEditorial({ round, compact = false }: { round: typeof rounds[numbe
 
 function ChallengeSection(){ return <section id="challenge" className="rounds-section"><div className="rounds-scene" aria-hidden="true"><div className="rounds-scene-sticky"><div className="rounds-architecture"/><div className="rounds-atmosphere"/></div></div><header className="section-heading"><aside aria-hidden="true"><i/><span>IDEAS</span><span>PROMPTS</span><span>OUTPUTS</span><span>IMPACT</span></aside><div><p className="eyebrow"><span>02 / </span>THE CHALLENGE</p><h2>Three rounds.<br/>Three ways to think.<br/><em>One skill — precision.</em></h2></div><aside aria-hidden="true"><i/><span>THINK</span><span>ANALYZE</span><span>CREATE</span><span>REFINE</span><span>SOLVE</span></aside></header>{rounds.map(round=><RoundEditorial round={round} key={round.id}/>)}<div className="rounds-footer-rail" aria-hidden="true"><span>SCROLL TO EXPLORE MORE.</span><i/><span>MORE THAN A HACKATHON.<br/>A THINKING REVOLUTION.</span></div></section>; }
 
+function RulesSection(){ return <motion.section id="rules" className="home-rules" {...reveal}>
+  <header><p className="eyebrow">RULES / OPERATING CONSTRAINTS</p><h2>Clear rules.<br/>Exact thinking.</h2><p>Six principles keep every round focused, comparable and fair.</p></header>
+  <div className="home-rules-list">{rules.map(([number,title,copy])=><article key={number}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div>
+  <footer><span>FINAL AUTHORITY</span><p>The decision of the organizers and judges is final and binding.</p></footer>
+</motion.section>; }
+
 export function HomePage() { return <PublicLayout><main className="home-main">
-  <section className="reference-hero" aria-labelledby="hero-title">
+  <section id="home" className="reference-hero" aria-labelledby="hero-title">
     <Image className="reference-hero-image" src="/prompthon-hero-v2.png" alt="A dark brutalist hall opening to daylight with a laptop displaying a restrained green technical interface" fill priority sizes="100vw"/>
     <div className="reference-hero-shade"/><div className="hero-coordinate-grid" aria-hidden="true"/><div className="hero-measure hero-measure-left" aria-hidden="true"><span/><i/></div>
     <motion.div className="reference-hero-copy" initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{duration:.9,ease:[.16,1,.3,1]}}>
@@ -82,7 +87,7 @@ export function HomePage() { return <PublicLayout><main className="home-main">
     <motion.aside className="hero-side-copy" initial={{opacity:0,x:14}} animate={{opacity:1,x:0}} transition={{delay:.55,duration:.75}} aria-hidden="true"><i/><span>THINK</span><span>ANALYZE</span><span>CREATE</span><span>REFINE</span><span>SOLVE</span></motion.aside>
     <p className="hero-platform-note"><i/>A PLATFORM FOR<br/>THE NEXT GENERATION<br/>OF PROBLEM SOLVERS</p>
   </section>
-  <motion.section className="intro-section editorial-section" variants={introSequence} initial="hidden" whileInView="visible" viewport={{once:true,amount:.12}}>
+  <motion.section id="about" className="intro-section editorial-section" variants={introSequence} initial="hidden" whileInView="visible" viewport={{once:true,amount:.12}}>
     <Image className="intro-architecture" src="/prompthon-about-environment.png" alt="" fill sizes="100vw" aria-hidden="true"/>
     <div className="intro-architecture-shade" aria-hidden="true"/>
     <motion.div className="section-index" variants={introItem}><span>01</span><b>WHAT IS<br/>PROMPTHON?</b></motion.div>
@@ -104,6 +109,7 @@ export function HomePage() { return <PublicLayout><main className="home-main">
     <div className="intro-footer-rail" aria-hidden="true"><span><i/>MORE THAN A HACKATHON.</span><b/><span>A THINKING REVOLUTION.</span></div>
   </motion.section>
   <ChallengeSection/>
+  <RulesSection/>
   <PrizeSection/>
   <motion.section id="contact" className="coordinator-section editorial-section" {...reveal}><div><p className="eyebrow"><span>04 / </span>CONTACT / COORDINATORS</p><h2>Direct line<br/>to the event.</h2><div className="contact-signal" aria-hidden="true"><i/><span>CHANNEL OPEN</span></div></div><div className="contact-list"><a href="tel:+919808144754"><span>Karthick Vamsi</span><strong>98081 44754</strong></a><a href="tel:+919445423155"><span>Hemachandran</span><strong>94454 23155</strong></a></div></motion.section>
   <FinalCta/>
@@ -189,11 +195,3 @@ function FinalCta(){ return <motion.section className="final-cta" aria-labelledb
   <div className="closing-platform-copy" aria-hidden="true"><i/>FROM CURIOSITY TO CLARITY&nbsp;&nbsp; // &nbsp;&nbsp;FROM PROMPTS TO POSSIBILITIES<i/></div>
   <footer className="closing-footer-notes" aria-hidden="true"><span><i/>POWERED BY<br/>A COMMUNITY THAT<br/>BUILDS TOMORROW.</span><span><i/>MORE THAN<br/>A HACKATHON.<br/>A THINKING REVOLUTION.</span></footer>
 </motion.section>; }
-
-export function AboutPage(){ return <PublicLayout><main className="public-page"><PageIntro index="01" eyebrow="ABOUT THE SYSTEM" title="Precision is not a feature. It is the discipline." copy="PROMPTHON 2026 is an official technical event created by the Department of Computer Science and Business Systems, Easwari Engineering College."/><section className="manifesto-grid"><motion.div {...reveal}><p className="big-statement">AI is only as useful as the thinking that directs it.</p></motion.div><motion.div className="prose" {...reveal}><p>Prompthon asks participants to move past casual prompting and work like engineers: uncover ambiguity, define constraints, test assumptions and communicate intent with clarity.</p><p>The competition is designed for students in Grades 9—12 and rewards thoughtful iteration over lucky output.</p></motion.div></section><section className="principles"><p className="eyebrow">COMPETITION PRINCIPLES</p>{[['01','Discover before directing'],['02','Make constraints explicit'],['03','Prove every result'],['04','Optimize for useful output']].map(([n,t])=><div key={n}><span>{n}</span><h3>{t}</h3><Check size={18}/></div>)}</section><section className="institution-block"><div><p className="eyebrow">ORGANIZED BY</p><h2>Department of Computer Science<br/>and Business Systems</h2></div><p>Easwari Engineering College<br/>12 September 2026</p></section></main></PublicLayout>; }
-
-export function RoundsPage(){ return <PublicLayout><main className="public-page"><PageIntro index="02" eyebrow="THE CHALLENGE" title="Three tests of exact thinking." copy="Each round isolates a different prompt-engineering skill. Progression is controlled by organizer review."/><section className="rounds-page-list">{rounds.map(round=><RoundEditorial round={round} compact key={round.id}/>)}</section><section className="qualification-flow"><p className="eyebrow">QUALIFICATION LOGIC</p><div><span>ROUND 01</span><ArrowRight/><span>ADMIN REVIEW</span><ArrowRight/><span className="accent">APPROVED</span><ArrowRight/><span>ROUND 02 UNLOCKED</span></div><div className="muted-path"><span>REJECTED</span><ArrowRight/><span>COMPETITION ENDS FOR TEAM</span></div></section></main></PublicLayout>; }
-
-export function RulesPage(){ return <PublicLayout><main className="public-page"><PageIntro index="03" eyebrow="RULES & GUIDELINES" title="Clear constraints. Fair evaluation." copy="The operating principles that keep every round focused, comparable and transparent."/><section className="rules-list">{rules.map(([n,title,copy])=><motion.article key={n} {...reveal}><span>{n}</span><h2>{title}</h2><p>{copy}</p></motion.article>)}</section><section className="rules-note"><p className="eyebrow">FINAL AUTHORITY</p><h2>The decision of the organizers and judges is final and binding.</h2></section></main></PublicLayout>; }
-
-export function PrizesPage(){ return <PublicLayout><main className="home-main prizes-route"><PrizeSection/><section className="evaluation-matrix prizes-evaluation"><p className="eyebrow">EVALUATION LENS</p>{rounds.map(r=><div key={r.id}><span>ROUND {r.code}</span><strong>{r.title}</strong><p>{r.evaluation}</p></div>)}</section><FinalCta/></main></PublicLayout>; }
