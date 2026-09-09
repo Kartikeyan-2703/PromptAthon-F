@@ -498,7 +498,7 @@
 }
 
 .rounds-section::after {
-  z-index: -2;
+  z-index: 1;
   opacity: .62;
   background-size: 48px 48px;
   mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
@@ -507,8 +507,14 @@
 .rounds-scene {
   position: absolute;
   inset: 0;
-  z-index: -4;
+  z-index: 0;
   pointer-events: none;
+}
+
+.rounds-section > .section-heading,
+.rounds-section > .round-editorial,
+.rounds-section > .rounds-footer-rail {
+  z-index: 2;
 }
 
 .rounds-scene-sticky {
