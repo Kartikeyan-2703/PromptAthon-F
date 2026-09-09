@@ -109,7 +109,58 @@ export function HomePage() { return <PublicLayout><main className="home-main">
   <FinalCta/>
   </main></PublicLayout>; }
 
-function PrizeSection({ index = '03' }: { index?: string }){ return <motion.section className="prize-section" {...reveal}><header className="prize-head"><div><p className="eyebrow"><span>{index} / </span>PRIZES</p><h2>Precision deserves<br/>recognition.</h2></div><p>REWARDING<br/>EXACT THINKING</p></header><div className="prize-stage"><div className="prize-axis" aria-hidden="true"><span>RANK</span><i/><span>RECOGNITION</span></div>{[['02','₹2000','SECOND PLACE'],['01','₹3000','FIRST PLACE'],['03','₹1000','THIRD PLACE']].map(([n,p,l],index)=><motion.div className={`prize prize-${n}`} key={n} initial={{opacity:0,y:28}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.35}} transition={{duration:.7,delay:index*.08,ease:[.16,1,.3,1]}}><span>{n}</span><strong>{p}</strong><p>{l}</p></motion.div>)}</div></motion.section>; }
+const prizePlacements = [
+  { rank:'02', order:'SECOND', amount:'₹2000', place:'SECOND PLACE', copy:['SHARP','THINKERS','BRIGHTER','TOMORROWS.'] },
+  { rank:'01', order:'FIRST', amount:'₹3000', place:'FIRST PLACE', copy:['BIGGER','IDEAS','BOLDER','POSSIBILITIES.'] },
+  { rank:'03', order:'THIRD', amount:'₹1000', place:'THIRD PLACE', copy:['GOOD','THINKING','GOES','A LONG WAY.'] },
+];
+
+function PrizeBlock({ prize, position }: { prize:typeof prizePlacements[number]; position:number }) {
+  return <motion.article
+    className={`prize-monolith prize-monolith-${prize.rank}`}
+    initial={{opacity:0,y:70}}
+    whileInView={{opacity:1,y:0}}
+    viewport={{once:true,amount:.28}}
+    transition={{duration:.9,delay:.22 + position*.1,ease:[.16,1,.3,1]}}
+  >
+    <div className="prize-monolith-top" aria-hidden="true"/>
+    <div className="prize-monolith-side" aria-hidden="true"/>
+    <div className="prize-monolith-face">
+      <span>{prize.rank} / {prize.order}</span>
+      <strong>{prize.amount}</strong>
+      <p>{prize.place}</p>
+      <i/>
+      <small>{prize.copy.map(line=><b key={line}>{line}</b>)}</small>
+    </div>
+    <div className="prize-floor-reflection" aria-hidden="true"/>
+  </motion.article>;
+}
+
+function PrizeSection(){ return <motion.section id="prizes" className="prize-section" aria-labelledby="prizes-heading" initial="hidden" whileInView="visible" viewport={{once:true,amount:.12}} variants={{hidden:{opacity:0},visible:{opacity:1,transition:{duration:.8,staggerChildren:.1}}}}>
+  <Image className="prize-environment" src="/prompthon-prizes-environment.png" alt="" fill sizes="100vw" aria-hidden="true"/>
+  <div className="prize-environment-shade" aria-hidden="true"/>
+  <div className="prize-technical-grid" aria-hidden="true"/>
+  <div className="prize-ghost-numbers" aria-hidden="true"><span>02</span><span>01</span><span>03</span></div>
+  <div className="prize-scene">
+    <motion.header className="prize-copy" variants={introItem}>
+      <p className="eyebrow"><span>03 / </span>PRIZES</p>
+      <h2 id="prizes-heading">Precision deserves<br/>recognition.</h2>
+      <i/>
+      <p>Great thinking deserves greater opportunities.<br/>Compete. Create. Solve. And take home rewards<br/>that fuel your next big idea.</p>
+      <small>IDEAS<br/>TODAY<br/>A BRIGHTER<br/>TOMORROW.</small>
+    </motion.header>
+    <aside className="prize-annotation" aria-hidden="true"><i/><div><span>REWARDING<br/>EXACT THINKING.</span><b>{'//'}</b><span>SAME QUESTIONS.<br/>A HIGHER<br/>STANDARD.</span></div></aside>
+    <div className="prize-stage">{prizePlacements.map((prize,index)=><PrizeBlock prize={prize} position={index} key={prize.rank}/>)}</div>
+    <div className="prize-horizon" aria-hidden="true"><i/><span/></div>
+    <footer className="prize-footer-rail" aria-hidden="true">
+      <span className="prize-scroll"><Mouse size={16}/>SCROLL TO EXPLORE</span>
+      <span><i/>PROMPTHON 2026</span>
+      <b/>
+      <span>THINK DEEPER.<br/>SOLVE BOLDER.</span>
+      <span>PRECISION<br/>BUILDS<br/>POSSIBILITIES.</span>
+    </footer>
+  </div>
+</motion.section>; }
 function FinalCta(){ return <section className="final-cta"><div className="closing-system" aria-hidden="true"><span>INPUT</span><i/><span>INTENT</span><i/><span>OUTPUT</span></div><div className="scanline"><ScanLine/></div><p className="eyebrow">&gt; AWAITING INPUT_</p><h2>THINK LIKE A HACKER.<br/><span>PROMPT LIKE A PRO.</span></h2><p>THE CHALLENGE BEGINS WITH A BLANK INPUT.</p><Link className="primary-button" href="/login">Participant login <ArrowRight size={17}/></Link><small className="system-close">PROMPTHON.EXE / READY FOR INITIALIZATION</small></section>; }
 
 export function AboutPage(){ return <PublicLayout><main className="public-page"><PageIntro index="01" eyebrow="ABOUT THE SYSTEM" title="Precision is not a feature. It is the discipline." copy="PROMPTHON 2026 is an official technical event created by the Department of Computer Science and Business Systems, Easwari Engineering College."/><section className="manifesto-grid"><motion.div {...reveal}><p className="big-statement">AI is only as useful as the thinking that directs it.</p></motion.div><motion.div className="prose" {...reveal}><p>Prompthon asks participants to move past casual prompting and work like engineers: uncover ambiguity, define constraints, test assumptions and communicate intent with clarity.</p><p>The competition is designed for students in Grades 9—12 and rewards thoughtful iteration over lucky output.</p></motion.div></section><section className="principles"><p className="eyebrow">COMPETITION PRINCIPLES</p>{[['01','Discover before directing'],['02','Make constraints explicit'],['03','Prove every result'],['04','Optimize for useful output']].map(([n,t])=><div key={n}><span>{n}</span><h3>{t}</h3><Check size={18}/></div>)}</section><section className="institution-block"><div><p className="eyebrow">ORGANIZED BY</p><h2>Department of Computer Science<br/>and Business Systems</h2></div><p>Easwari Engineering College<br/>12 September 2026</p></section></main></PublicLayout>; }
@@ -118,4 +169,4 @@ export function RoundsPage(){ return <PublicLayout><main className="public-page"
 
 export function RulesPage(){ return <PublicLayout><main className="public-page"><PageIntro index="03" eyebrow="RULES & GUIDELINES" title="Clear constraints. Fair evaluation." copy="The operating principles that keep every round focused, comparable and transparent."/><section className="rules-list">{rules.map(([n,title,copy])=><motion.article key={n} {...reveal}><span>{n}</span><h2>{title}</h2><p>{copy}</p></motion.article>)}</section><section className="rules-note"><p className="eyebrow">FINAL AUTHORITY</p><h2>The decision of the organizers and judges is final and binding.</h2></section></main></PublicLayout>; }
 
-export function PrizesPage(){ return <PublicLayout><main className="public-page"><PageIntro index="04" eyebrow="PRIZES" title="Precision, recognized." copy="Three placements. One shared standard: exceptional command of context, structure and intent."/><PrizeSection index="04"/><section className="evaluation-matrix"><p className="eyebrow">EVALUATION LENS</p>{rounds.map(r=><div key={r.id}><span>ROUND {r.code}</span><strong>{r.title}</strong><p>{r.evaluation}</p></div>)}</section><FinalCta/></main></PublicLayout>; }
+export function PrizesPage(){ return <PublicLayout><main className="home-main prizes-route"><PrizeSection/><section className="evaluation-matrix prizes-evaluation"><p className="eyebrow">EVALUATION LENS</p>{rounds.map(r=><div key={r.id}><span>ROUND {r.code}</span><strong>{r.title}</strong><p>{r.evaluation}</p></div>)}</section><FinalCta/></main></PublicLayout>; }
