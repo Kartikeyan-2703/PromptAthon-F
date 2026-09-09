@@ -58,7 +58,7 @@ export function HomePage() { return <PublicLayout><main className="home-main">
   <motion.section className="intro-section editorial-section" variants={introSequence} initial="hidden" whileInView="visible" viewport={{once:true,amount:.12}}>
     <Image className="intro-architecture" src="/prompthon-about-environment.png" alt="" fill sizes="100vw" aria-hidden="true"/>
     <div className="intro-architecture-shade" aria-hidden="true"/>
-    <motion.div className="section-index" variants={introItem}>01</motion.div>
+    <motion.div className="section-index" variants={introItem}><span>01</span><b>WHAT IS<br/>PROMPTHON?</b></motion.div>
     <motion.div className="intro-grid-reveal" variants={introItem} aria-hidden="true"><i/><span/><b/></motion.div>
     <div className="intro-heading">
       <motion.p className="eyebrow" variants={introItem}><span>01 / </span>WHAT IS PROMPTHON?</motion.p>
@@ -71,7 +71,10 @@ export function HomePage() { return <PublicLayout><main className="home-main">
       <div className="blueprint-schematic"><div className="blueprint-signal"/>{promptPipeline.map(({step,copy,Icon},index)=><div className="blueprint-stage" key={step}><span>{String(index+1).padStart(2,'0')}</span><div className="pipeline-glyph"><Icon size={19} strokeWidth={1.45}/></div><strong>{step}</strong><small>{copy}</small><i/></div>)}</div>
     </motion.div>
     <aside className="intro-annotation intro-annotation-left" aria-hidden="true"><i/><span>HUMAN IDEAS</span><b>+</b><span>AI POSSIBILITIES</span><b>=</b><span>BIGGER SOLUTIONS</span></aside>
-    <aside className="intro-annotation intro-annotation-right" aria-hidden="true"><i/><span>IDEAS</span><span>PROMPTS</span><span>OUTPUTS</span><span>IMPACT</span></aside>
+    <aside className="intro-annotation intro-annotation-right" aria-hidden="true"><i/><span>THINK</span><span>ANALYZE</span><span>CREATE</span><span>REFINE</span><span>SOLVE</span></aside>
+    <aside className="intro-footer-note intro-footer-left" aria-hidden="true"><i/><span>ENGINEERING<br/>A MORE CAPABLE<br/>TOMORROW.</span></aside>
+    <aside className="intro-footer-note intro-footer-right" aria-hidden="true"><i/><span>PRECISION<br/>BUILDS<br/>POSSIBILITIES.</span></aside>
+    <div className="intro-footer-rail" aria-hidden="true"><span><i/>MORE THAN A HACKATHON.</span><b/><span>A THINKING REVOLUTION.</span></div>
   </motion.section>
   <section id="challenge" className="challenge-teaser"><p><i/>02 / THE CHALLENGE</p><h2>THREE ROUNDS.<br/>THREE WAYS TO THINK.</h2><div><span>ONE SKILL — PRECISION.</span><button aria-label="Previous challenge"><ArrowLeft/></button><button aria-label="Next challenge"><ArrowRight/></button></div></section>
   <section className="rounds-section"><header className="section-heading"><p className="eyebrow"><span>02 / </span>THE CHALLENGE</p><h2>Three rounds.<br/>Three ways to think.<br/><em>One skill — precision.</em></h2></header>{rounds.map(round=><RoundEditorial round={round} key={round.id}/>)}</section>
