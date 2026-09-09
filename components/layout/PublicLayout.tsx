@@ -48,7 +48,7 @@ export function PublicFooter() {
       <nav aria-label="Footer navigation">{links.slice(1).map(({label,href})=><Link key={href} href={href}>{label}</Link>)}<Link href="/login">Participant login</Link></nav>
     </div>
     <div className="footer-meta"><p>EASWARI ENGINEERING COLLEGE<br/><span>DEPARTMENT OF COMPUTER SCIENCE AND BUSINESS SYSTEMS</span></p><p>12 SEPTEMBER 2026<br/><span>CHENNAI / INDIA</span></p></div>
-    <div className="footer-rail"><span>© 2026 PROMPTHON</span><i/><a className="footer-powered" href="http://neuralweblabs.com/" target="_blank" rel="noopener noreferrer"><small>POWERED BY</small><strong>NEURALWEB LABS</strong><ArrowRight size={14}/></a></div>
+    <div className="footer-rail"><i/><a className="footer-powered" href="http://neuralweblabs.com/" target="_blank" rel="noopener noreferrer"><span>Powered by</span><strong>NeuralWeb Labs</strong></a><i/></div>
   </footer>;
 }
 
