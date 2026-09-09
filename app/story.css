@@ -82,8 +82,8 @@
   transform: translateX(-50%);
   object-fit: cover;
   object-position: center bottom;
-  opacity: .94;
-  filter: brightness(.86) saturate(.76) contrast(1.06);
+  opacity: 1;
+  filter: brightness(1.02) saturate(.9) contrast(1.04);
 }
 
 .intro-architecture-shade {
@@ -94,8 +94,8 @@
   transform: translateX(-50%);
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 50% 35%, transparent 0 34%, rgba(1, 3, 2, .12) 74%),
-    linear-gradient(180deg, rgba(1, 3, 2, .12), transparent 24%, transparent 74%, rgba(1, 3, 2, .16));
+    radial-gradient(ellipse at 50% 35%, transparent 0 42%, rgba(1, 3, 2, .055) 82%),
+    linear-gradient(180deg, rgba(1, 3, 2, .045), transparent 25%, transparent 78%, rgba(1, 3, 2, .075));
 }
 
 .intro-section::after {
@@ -513,17 +513,17 @@
 
 .rounds-architecture {
   z-index: -4;
-  opacity: .72;
+  opacity: .94;
   background: url('/prompthon-rounds-environment.png') center top / max(1180px, 100vw) auto repeat-y;
-  filter: brightness(.72) saturate(.72) contrast(1.08);
+  filter: brightness(.94) saturate(.88) contrast(1.05);
 }
 
 .rounds-atmosphere {
   z-index: -3;
   background:
-    linear-gradient(180deg, rgba(1,2,1,.08), rgba(1,2,1,.18) 15%, rgba(1,2,1,.12) 85%, rgba(1,2,1,.35)),
-    radial-gradient(ellipse at 50% 8%, transparent 0 28%, rgba(0,0,0,.24) 78%),
-    repeating-linear-gradient(180deg, transparent 0 37.35vw, rgba(117,222,151,.06) 37.42vw, transparent 37.58vw);
+    linear-gradient(180deg, rgba(1,2,1,.025), rgba(1,2,1,.08) 15%, rgba(1,2,1,.045) 85%, rgba(1,2,1,.16)),
+    radial-gradient(ellipse at 50% 8%, transparent 0 38%, rgba(0,0,0,.1) 84%),
+    repeating-linear-gradient(180deg, transparent 0 37.35vw, rgba(130,232,164,.1) 37.42vw, transparent 37.58vw);
 }
 
 .rounds-section > .section-heading {
@@ -1135,8 +1135,8 @@
   }
 
   .intro-architecture {
-    opacity: .74;
-    filter: brightness(.72) saturate(.68) contrast(1.08);
+    opacity: .92;
+    filter: brightness(.94) saturate(.82) contrast(1.05);
   }
 
   .about-blueprint {
@@ -1156,12 +1156,13 @@
   }
 
   .rounds-architecture {
-    opacity: .58;
+    opacity: .86;
     background-size: auto 410px;
+    filter: brightness(.9) saturate(.82) contrast(1.05);
   }
 
   .rounds-atmosphere {
-    background: linear-gradient(180deg, rgba(1,2,1,.16), rgba(1,2,1,.3));
+    background: linear-gradient(180deg, rgba(1,2,1,.055), rgba(1,2,1,.14));
   }
 
   .rounds-section > .section-heading {
