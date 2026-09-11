@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+/* eslint-disable @next/next/no-html-link-for-pages -- Public login CTAs intentionally use document navigation for Cloudflare Worker route compatibility. */
 import Image from 'next/image';
 import { ArrowDown, ArrowRight, Box, Braces, CalendarDays, CircleHelp, Clock3, Eye, FileInput, FileText, GitBranch, ImageIcon, IndianRupee, Layers3, Lightbulb, ListChecks, MessageSquareText, Mouse, Search, ShieldCheck, SlidersHorizontal, SquareTerminal, Users, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
@@ -106,7 +106,7 @@ export function HomePage() { return <PublicLayout><main className="home-main">
           <div><IndianRupee/><p><strong>ENTRY FEE</strong><span>₹100</span></p></div>
         </div>
       </div>
-      <div className="hero-actions"><Link className="reference-login" href="/login"><ArrowRight size={18}/>Participant login</Link><a className="reference-explore" href="#challenge">Explore the challenge <ArrowDown size={16}/></a></div>
+      <div className="hero-actions"><a className="reference-login" href="/login"><ArrowRight size={18}/>Participant login</a><a className="reference-explore" href="#challenge">Explore the challenge <ArrowDown size={16}/></a></div>
       <div className="scroll-cue"><Mouse size={20}/><span>SCROLL TO DISCOVER</span></div>
     </motion.div>
     <motion.aside className="hero-wall-note" initial={false} animate={{opacity:1}} aria-hidden="true">
@@ -217,7 +217,7 @@ function FinalCta(){ return <motion.section className="final-cta" aria-labelledb
     <p className="closing-kicker"><i/>PROMPTHON 2026<i/></p>
     <h2 id="closing-heading">THINK LIKE A HACKER.<br/><span>PROMPT LIKE A PRO.</span></h2>
     <p className="closing-subtitle">THE CHALLENGE BEGINS WITH A BLANK INPUT.</p>
-    <Link className="closing-login" href="/login"><span>[</span><ArrowRight size={16}/>PARTICIPANT LOGIN<span>]</span></Link>
+    <a className="closing-login" href="/login"><span>[</span><ArrowRight size={16}/>PARTICIPANT LOGIN<span>]</span></a>
     <p className="closing-keywords">IDEAS&nbsp; / &nbsp;INNOVATION&nbsp; / &nbsp;INTELLIGENCE&nbsp; / &nbsp;IMPACT</p>
   </motion.div>
   <div className="closing-platform-copy" aria-hidden="true"><i/>FROM CURIOSITY TO CLARITY&nbsp;&nbsp; // &nbsp;&nbsp;FROM PROMPTS TO POSSIBILITIES<i/></div>
