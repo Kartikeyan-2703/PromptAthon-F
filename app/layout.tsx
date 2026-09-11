@@ -1,10 +1,15 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Chakra_Petch, Geist, Geist_Mono, Oxanium } from 'next/font/google';
 import './globals.css';
 import './reference.css';
 import './compact.css';
 import './material.css';
 import './story.css';
+import './portal-system.css';
+import './hero-refinement.css';
+import './participant-flow.css';
+// Round-specific public and participant rulebook styles.
+import './rules-system.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -14,6 +19,18 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+});
+
+const chakraPetch = Chakra_Petch({
+  variable: '--font-prompthon-technical',
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700'],
+});
+
+const oxanium = Oxanium({
+  variable: '--font-prompthon-year',
+  subsets: ['latin'],
+  weight: ['200', '300'],
 });
 
 export const metadata: Metadata = {
@@ -41,7 +58,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${chakraPetch.variable} ${oxanium.variable} antialiased`}
       >
         {children}
       </body>

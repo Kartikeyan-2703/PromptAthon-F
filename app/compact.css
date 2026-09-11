@@ -566,7 +566,7 @@
     padding: 14px 8px 3px;
   }
 
-  .sidebar-bottom > a {
+  .sidebar-bottom > a, .sidebar-bottom > button {
     font-size: 10px;
   }
 

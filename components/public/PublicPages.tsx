@@ -2,10 +2,11 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowDown, ArrowRight, Box, Braces, CalendarDays, CircleHelp, Clock3, Eye, FileInput, FileText, GitBranch, ImageIcon, IndianRupee, Layers3, Lightbulb, ListChecks, MessageSquareText, Mouse, Search, SlidersHorizontal, SquareTerminal, Users } from 'lucide-react';
+import { ArrowDown, ArrowRight, Box, Braces, CalendarDays, CircleHelp, Clock3, Eye, FileInput, FileText, GitBranch, ImageIcon, IndianRupee, Layers3, Lightbulb, ListChecks, MessageSquareText, Mouse, Search, ShieldCheck, SlidersHorizontal, SquareTerminal, Users, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { rounds, rules } from '@/lib/mock-data';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { roundRules, rounds } from '@/lib/mock-data';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 
 const reveal = { initial:{opacity:0,y:24}, whileInView:{opacity:1,y:0}, viewport:{once:true,amount:.18}, transition:{duration:.65,ease:[.16,1,.3,1] as const} };
@@ -57,34 +58,61 @@ function RoundEditorial({ round, compact = false }: { round: typeof rounds[numbe
 
 function ChallengeSection(){ return <section id="challenge" className="rounds-section"><div className="rounds-scene" aria-hidden="true"><div className="rounds-scene-sticky"><div className="rounds-architecture"/><div className="rounds-atmosphere"/></div></div><header className="section-heading"><aside aria-hidden="true"><i/><span>IDEAS</span><span>PROMPTS</span><span>OUTPUTS</span><span>IMPACT</span></aside><div><p className="eyebrow"><span>02 / </span>THE CHALLENGE</p><h2>Three rounds.<br/>Three ways to think.<br/><em>One skill — precision.</em></h2></div><aside aria-hidden="true"><i/><span>THINK</span><span>ANALYZE</span><span>CREATE</span><span>REFINE</span><span>SOLVE</span></aside></header>{rounds.map(round=><RoundEditorial round={round} key={round.id}/>)}<div className="rounds-footer-rail" aria-hidden="true"><span>SCROLL TO EXPLORE MORE.</span><i/><span>MORE THAN A HACKATHON.<br/>A THINKING REVOLUTION.</span></div></section>; }
 
-function RulesSection(){ return <motion.section id="rules" className="home-rules" {...reveal}>
-  <header><p className="eyebrow">RULES / OPERATING CONSTRAINTS</p><h2>Clear rules.<br/>Exact thinking.</h2><p>Six principles keep every round focused, comparable and fair.</p></header>
-  <div className="home-rules-list">{rules.map(([number,title,copy])=><article key={number}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div>
-  <footer><span>FINAL AUTHORITY</span><p>The decision of the organizers and judges is final and binding.</p></footer>
-</motion.section>; }
+function RulesSection(){
+  const [selected,setSelected]=useState<number|null>(null);
+  const regulation=selected ? roundRules[selected-1] : null;
+
+  useEffect(()=>{
+    if(!selected)return;
+    const previousOverflow=document.body.style.overflow;
+    const closeOnEscape=(event:KeyboardEvent)=>{if(event.key==='Escape')setSelected(null)};
+    document.body.style.overflow='hidden';
+    window.addEventListener('keydown',closeOnEscape);
+    return()=>{document.body.style.overflow=previousOverflow;window.removeEventListener('keydown',closeOnEscape)};
+  },[selected]);
+
+  return <>
+    <motion.section id="rules" className="home-rules home-round-rulebook home-round-rulebook-compact" {...reveal}>
+      <header><p className="eyebrow">RULES / ROUND PROTOCOLS</p><h2>Know the rules.<br/>Compete precisely.</h2><p>Select a round to review its permitted tools, submission format and qualification conditions.</p></header>
+      <div className="home-rule-rounds" aria-label="Competition round rules">{roundRules.map((item)=><button type="button" aria-haspopup="dialog" onClick={()=>setSelected(item.round)} key={item.round}><span>{item.code}</span><small>ROUND {item.code}</small><strong>{item.title}</strong><p>{item.subtitle}</p><ArrowRight size={16}/></button>)}</div>
+      <footer><ShieldCheck size={15}/><span>FINAL AUTHORITY</span><p>The decision of the organizers and jury is final and binding.</p></footer>
+    </motion.section>
+    <AnimatePresence>{regulation&&<motion.div className="home-rule-modal-backdrop" role="presentation" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onMouseDown={()=>setSelected(null)}>
+      <motion.section className="home-rule-modal" role="dialog" aria-modal="true" aria-labelledby={`round-${regulation.code}-rules-title`} initial={{opacity:0,y:24,scale:.985}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:14,scale:.99}} transition={{duration:.35,ease:[.16,1,.3,1]}} onMouseDown={(event)=>event.stopPropagation()}>
+        <header className="home-rule-modal-head"><div><p className="eyebrow">ROUND {regulation.code} / RULES & REGULATIONS</p><h3 id={`round-${regulation.code}-rules-title`}>{regulation.title}</h3><span>{regulation.subtitle}</span></div><button type="button" onClick={()=>setSelected(null)} aria-label="Close rules popup" autoFocus><X size={18}/></button></header>
+        <div className="home-rule-modal-body"><p className="home-rule-modal-intro">{regulation.intro}</p><ol>{regulation.rules.map((rule,index)=><li key={rule}><span>{String(index+1).padStart(2,'0')}</span><p>{rule}</p></li>)}</ol><footer><ShieldCheck size={15}/><p>The organizers and jury retain final authority over qualification and disqualification decisions.</p></footer></div>
+      </motion.section>
+    </motion.div>}</AnimatePresence>
+  </>;
+}
 
 export function HomePage() { return <PublicLayout><main className="home-main">
   <section id="home" className="reference-hero" aria-labelledby="hero-title">
     <Image className="reference-hero-image" src="/prompthon-hero-v2.png" alt="A dark brutalist hall opening to daylight with a laptop displaying a restrained green technical interface" fill priority sizes="100vw"/>
     <div className="reference-hero-shade"/><div className="hero-coordinate-grid" aria-hidden="true"/><div className="hero-measure hero-measure-left" aria-hidden="true"><span/><i/></div>
-    <motion.div className="reference-hero-copy" initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{duration:.9,ease:[.16,1,.3,1]}}>
-      <div className="presenter"><span>EASWARI ENGINEERING COLLEGE</span><span>DEPARTMENT OF COMPUTER SCIENCE AND BUSINESS SYSTEMS</span><p><i/>PRESENTS</p></div>
-      <h1 id="hero-title"><strong>PROMPTHON</strong><span>2026</span></h1>
-      <p className="hero-subtitle">AI PROMPT ENGINEERING HACKATHON</p><i className="copy-rule"/>
-      <p className="hero-intro">Turn vague problems into precise instructions.<br/>Reverse-engineer intelligence.<br/>Recreate the impossible.</p>
-      <div className="reference-meta" aria-label="Event information">
-        <div><CalendarDays/><p><strong>12 SEP 2026</strong><span>SATURDAY</span></p></div>
-        <div><Clock3/><p><strong>9:00 AM — 4:00 PM</strong><span>5 HOURS</span></p></div>
-        <div><Users/><p><strong>TEAM SIZE</strong><span>1 — 3 MEMBERS</span></p></div>
-        <div><IndianRupee/><p><strong>ENTRY FEE</strong><span>₹100</span></p></div>
+    <motion.div className="reference-hero-copy" initial={false} animate={{opacity:1,y:0}} transition={{duration:.55,ease:[.16,1,.3,1]}}>
+      <div className="hero-heading-block">
+        <div className="presenter"><span>EASWARI ENGINEERING COLLEGE</span><span>DEPARTMENT OF COMPUTER SCIENCE AND BUSINESS SYSTEMS</span><p><i/>PRESENTS</p></div>
+        <h1 id="hero-title"><strong>PROMPTHON</strong><span>2026</span></h1>
+        <p className="hero-subtitle">AI PROMPT ENGINEERING HACKATHON</p>
+      </div>
+      <div className="hero-information-block">
+        <i className="copy-rule"/>
+        <p className="hero-intro">Turn vague problems into precise instructions.<br/>Reverse-engineer intelligence.<br/>Recreate the impossible.</p>
+        <div className="reference-meta" aria-label="Event information">
+          <div><CalendarDays/><p><strong>12 SEP 2026</strong><span>SATURDAY</span></p></div>
+          <div><Clock3/><p><strong>9:00 AM — 4:00 PM</strong><span>5 HOURS</span></p></div>
+          <div><Users/><p><strong>TEAM SIZE</strong><span>1 — 3 MEMBERS</span></p></div>
+          <div><IndianRupee/><p><strong>ENTRY FEE</strong><span>₹100</span></p></div>
+        </div>
       </div>
       <div className="hero-actions"><Link className="reference-login" href="/login"><ArrowRight size={18}/>Participant login</Link><a className="reference-explore" href="#challenge">Explore the challenge <ArrowDown size={16}/></a></div>
       <div className="scroll-cue"><Mouse size={20}/><span>SCROLL TO DISCOVER</span></div>
     </motion.div>
-    <motion.aside className="hero-wall-note" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7,duration:.9}} aria-hidden="true">
+    <motion.aside className="hero-wall-note" initial={false} animate={{opacity:1}} aria-hidden="true">
       <span>HUMAN IDEAS</span><b>+</b><span>AI POSSIBILITIES</span><b>=</b><span>BIGGER SOLUTIONS</span>
     </motion.aside>
-    <motion.aside className="hero-side-copy" initial={{opacity:0,x:14}} animate={{opacity:1,x:0}} transition={{delay:.55,duration:.75}} aria-hidden="true"><i/><span>THINK</span><span>ANALYZE</span><span>CREATE</span><span>REFINE</span><span>SOLVE</span></motion.aside>
+    <motion.aside className="hero-side-copy" initial={false} animate={{opacity:1,x:0}} aria-hidden="true"><i/><span>THINK</span><span>ANALYZE</span><span>CREATE</span><span>REFINE</span><span>SOLVE</span></motion.aside>
     <p className="hero-platform-note"><i/>A PLATFORM FOR<br/>THE NEXT GENERATION<br/>OF PROBLEM SOLVERS</p>
   </section>
   <motion.section id="about" className="intro-section editorial-section" variants={introSequence} initial="hidden" whileInView="visible" viewport={{once:true,amount:.12}}>
