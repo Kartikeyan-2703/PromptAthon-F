@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/set-state-in-effect -- route loaders synchronize component state with the API */
 'use client';
-import Link from 'next/link';
+import Link from '@/components/ui/DocumentLink';
 import { Activity, ArrowRight, Check, ChevronLeft, ChevronRight, Copy, Download, ExternalLink, LoaderCircle, Lock, Play, Search, ShieldCheck, Square, X } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { adminApi, AdminSubmissionDetail as SubmissionDetailData, AdminSubmissionPage, ApiClientError, SubmissionReviewStatus } from '@/services/api-client';

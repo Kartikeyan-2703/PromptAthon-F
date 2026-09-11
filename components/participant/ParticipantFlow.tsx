@@ -2,7 +2,7 @@
 'use client';
 
 import { FormEvent, useCallback, useEffect, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/ui/DocumentLink';
 import { ArrowRight, Check, ExternalLink, LoaderCircle, Lock, ShieldCheck, X } from 'lucide-react';
 import { ApiClientError, participantApi, ParticipantOverview, ParticipantRoundDetail, ParticipantRoundSummary, RoundAccessStatus } from '@/services/api-client';
 import { PortalLayout } from '@/components/layout/PortalLayout';

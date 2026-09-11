@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect -- route data is synchronized with the backend */
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/ui/DocumentLink';
 import { ArrowRight, ChevronLeft, ChevronRight, LoaderCircle, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { PortalLayout } from '@/components/layout/PortalLayout';

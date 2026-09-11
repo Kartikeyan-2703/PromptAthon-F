@@ -1,13 +1,11 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/ui/DocumentLink';
 import { ChevronLeft } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { type FormEvent, useState } from 'react';
 import { adminApi } from '@/services/api-client';
 
 export function AdminLogin() {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -19,7 +17,10 @@ export function AdminLogin() {
     setError('');
     try {
       await adminApi.login(email, password);
-      router.push('/admin');
+      // Vinext's deployed RSC transition currently fails on Worker navigation.
+      // A document navigation avoids that runtime path while preserving auth.
+      // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+      window.location.assign('/admin');
     } catch (reason) {
       setLoading(false);
       setError(reason instanceof Error ? reason.message : 'Organizer credentials were not recognized.');

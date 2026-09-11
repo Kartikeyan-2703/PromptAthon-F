@@ -1,14 +1,12 @@
 'use client';
 
 import { FormEvent, useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import Link from '@/components/ui/DocumentLink';
 import { motion } from 'framer-motion';
 import { LoaderCircle } from 'lucide-react';
 import { ApiClientError, participantApi } from '@/services/api-client';
 
 export function TeamSetup() {
-  const router = useRouter();
   const [members, setMembers] = useState(['', '', '']);
   const [teamCode, setTeamCode] = useState('');
   const [checking, setChecking] = useState(true);
@@ -18,15 +16,15 @@ export function TeamSetup() {
   useEffect(() => {
     participantApi.getOnboarding().then((result) => {
       if (!result.required) {
-        router.replace('/dashboard');
+        window.location.replace('/dashboard');
         return;
       }
       setTeamCode(result.teamCode);
     }).catch((reason) => {
-      if (reason instanceof ApiClientError && reason.status === 401) router.replace('/login');
+      if (reason instanceof ApiClientError && reason.status === 401) window.location.replace('/login');
       else setError(reason instanceof Error ? reason.message : 'Could not load team setup.');
     }).finally(() => setChecking(false));
-  }, [router]);
+  }, []);
 
   function updateMember(index: number, value: string) {
     setMembers((current) => current.map((member, position) => position === index ? value : member));
@@ -43,9 +41,9 @@ export function TeamSetup() {
     setError('');
     try {
       await participantApi.completeOnboarding(normalized.filter(Boolean));
-      router.replace('/dashboard');
+      window.location.replace('/dashboard');
     } catch (reason) {
-      if (reason instanceof ApiClientError && reason.code === 'TEAM_DETAILS_ALREADY_COMPLETED') router.replace('/dashboard');
+      if (reason instanceof ApiClientError && reason.code === 'TEAM_DETAILS_ALREADY_COMPLETED') window.location.replace('/dashboard');
       else setError(reason instanceof Error ? reason.message : 'Could not save team details.');
     } finally {
       setSaving(false);

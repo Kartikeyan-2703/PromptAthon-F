@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import Link from '@/components/ui/DocumentLink';
 import { CertificatePage, LeaderboardPage, ParticipantLogin, ParticipantSubmissions, ProfilePage } from '@/components/participant/ParticipantPages';
 import { ParticipantDashboard, ParticipantRulesPage } from '@/components/participant/ParticipantFlow';
 import { ParticipantRoundsFlow } from '@/components/participant/ParticipantRounds';

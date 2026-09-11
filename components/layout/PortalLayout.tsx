@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/ui/DocumentLink';
 import { Activity, Award, BookOpen, ChevronRight, FileQuestion, FileText, Gauge, LayoutDashboard, LogOut, Menu, Settings2, Shield, Trophy, Upload, UserPlus, Users, X } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { participantApi } from '@/services/api-client';
 
@@ -14,8 +14,8 @@ const adminLinks = [
 ] as const;
 
 export function PortalLayout({ children, admin = false }: { children: React.ReactNode; admin?: boolean }) {
-  const pathname = usePathname(); const router = useRouter(); const [open,setOpen] = useState(false); const links = admin ? adminLinks : participantLinks;
-  const logout = async () => { try { await participantApi.logout(); } finally { router.replace(admin ? '/admin/login' : '/login'); } };
+  const pathname = usePathname(); const [open,setOpen] = useState(false); const links = admin ? adminLinks : participantLinks;
+  const logout = async () => { try { await participantApi.logout(); } finally { window.location.replace(admin ? '/admin/login' : '/login'); } };
   const active = (href:string) => href === '/admin' ? pathname === href : href === '/rounds' ? pathname === href || pathname.startsWith('/round/') : pathname === href || pathname.startsWith(href + '/');
   return <div className={`portal-shell ${admin ? 'admin-shell' : 'participant-shell'}`}>
     <div className="portal-atmosphere" aria-hidden="true"><i/><i/><i/></div>

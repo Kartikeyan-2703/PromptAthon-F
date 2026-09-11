@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-html-link-for-pages -- Public login CTAs intentionally use document navigation for Cloudflare Worker route compatibility. */
 
-import Link from 'next/link';
+import Link from '@/components/ui/DocumentLink';
 import { ArrowRight, Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
