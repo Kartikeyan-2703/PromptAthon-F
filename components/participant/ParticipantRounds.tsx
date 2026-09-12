@@ -60,8 +60,24 @@ function RoundWorkspace({ round, reload }: { round: ParticipantRoundDetail; relo
       }
       if (round.number === 3 && !roundThreeLink.trim()) throw new Error('Add the chat conversation link for Round 3.');
       const payloadAnswers = round.number === 3 ? [] : answers.map((answer) => ({ ...answer, conversationUrl: answer.conversationUrl.trim() || undefined, promptText: answer.promptText.trim() }));
-      await participantApi.saveDraft(round.number, { aiTool: round.number === 3 ? undefined : aiTool, responseConversationUrl: round.number === 3 ? roundThreeLink.trim() : undefined, version: round.submission?.version, answers: payloadAnswers });
-      await participantApi.submit(round.number); await reload();
+      const draftPayload = { aiTool: round.number === 3 ? undefined : aiTool, responseConversationUrl: round.number === 3 ? roundThreeLink.trim() : undefined, version: round.submission?.version, answers: payloadAnswers };
+      try {
+        await participantApi.saveDraft(round.number, draftPayload);
+      } catch (reason) {
+        if (!(reason instanceof ApiClientError) || (reason.status < 500 && reason.status !== 409)) throw reason;
+        // A production request can finish in PostgreSQL even when its response is
+        // interrupted. Retrying without the stale version safely upserts the same
+        // team/round draft and never creates a duplicate submission.
+        await participantApi.saveDraft(round.number, { ...draftPayload, version: undefined });
+      }
+      try {
+        await participantApi.submit(round.number);
+      } catch (reason) {
+        if (!(reason instanceof ApiClientError) || (reason.status < 500 && reason.status !== 409)) throw reason;
+        const current = await participantApi.getRound(round.number);
+        if (!current.submission || current.submission.status === 'DRAFT') await participantApi.submit(round.number);
+      }
+      await reload();
     } catch (reason) { setError(reason instanceof Error ? reason.message : 'Submission failed.'); setBusy(false); }
   }
 
