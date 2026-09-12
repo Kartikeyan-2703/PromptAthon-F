@@ -1,4 +1,10 @@
-const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1').replace(/\/$/, '');
+const configuredApiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1').replace(/\/$/, '');
+// In production, send API traffic through this Worker origin. This makes the
+// HttpOnly session cookie first-party and reliable on Safari/iOS and browsers
+// that block third-party cookies. Local development continues to use :4000.
+const API_BASE_URL = typeof window !== 'undefined' && !/^localhost$|^127\.0\.0\.1$/.test(window.location.hostname)
+  ? '/api/v1'
+  : configuredApiUrl;
 
 type ErrorEnvelope = { error?: { code?: string; message?: string; requestId?: string } };
 
