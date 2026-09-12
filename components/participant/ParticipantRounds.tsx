@@ -64,6 +64,10 @@ function RoundWorkspace({ round, reload }: { round: ParticipantRoundDetail; relo
       try {
         await participantApi.saveDraft(round.number, draftPayload);
       } catch (reason) {
+        if (reason instanceof ApiClientError && reason.status === 403) {
+          const current = await participantApi.getRound(round.number);
+          if (current.submission && current.submission.status !== 'DRAFT') { await reload(); return; }
+        }
         if (!(reason instanceof ApiClientError) || (reason.status < 500 && reason.status !== 409)) throw reason;
         // A production request can finish in PostgreSQL even when its response is
         // interrupted. Retrying without the stale version safely upserts the same
@@ -73,6 +77,10 @@ function RoundWorkspace({ round, reload }: { round: ParticipantRoundDetail; relo
       try {
         await participantApi.submit(round.number);
       } catch (reason) {
+        if (reason instanceof ApiClientError && reason.status === 403) {
+          const current = await participantApi.getRound(round.number);
+          if (current.submission && current.submission.status !== 'DRAFT') { await reload(); return; }
+        }
         if (!(reason instanceof ApiClientError) || (reason.status < 500 && reason.status !== 409)) throw reason;
         const current = await participantApi.getRound(round.number);
         if (!current.submission || current.submission.status === 'DRAFT') await participantApi.submit(round.number);
