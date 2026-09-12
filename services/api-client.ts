@@ -51,7 +51,7 @@ export type SubmissionReviewStatus = 'SUBMITTED' | 'UNDER_REVIEW' | 'APPROVED' |
 export type SubmissionState = 'DRAFT' | SubmissionReviewStatus;
 export type AdminSubmissionListItem = {
   id: string; status: SubmissionReviewStatus; teamCodeSnapshot: string | null; aiTool: string | null;
-  submittedAt: string | null; version: number;
+  submittedAt: string | null; version: number; hasSubmission?: boolean;
   team: { id: string; code: string };
   round: { id: string; number: number; title: string };
   evaluation: { decision: 'APPROVED' | 'REJECTED'; score: string | number | null; feedback: string | null } | null;
